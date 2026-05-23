@@ -1079,6 +1079,32 @@
 <canvas id="canvas-bg"></canvas>
 
 <div id="app">
+  <div id="login-screen" style="
+position:fixed;
+inset:0;
+background:#0d0b1a;
+z-index:9999;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+">
+
+<h1 style="color:white;">
+💜 S.O.S Eficiência
+</h1>
+
+<button onclick="googleLogin()" style="
+padding:15px 20px;
+border:none;
+border-radius:15px;
+font-weight:bold;
+cursor:pointer;
+">
+Entrar com Google
+</button>
+
+</div>
   <!-- TOP BAR -->
   <div class="topbar">
     <span class="topbar-logo">💜 S.O.S Eficiência</span>
@@ -2461,6 +2487,46 @@ function init() {
 }
 
 init();
+  const firebaseConfig = {
+  apiKey: "AIzaSyD9ghK-5bBjDlEpvWZZk2z7OCKxErAXIZ4",
+  authDomain: "sos-eficiencia.firebaseapp.com",
+  projectId: "sos-eficiencia",
+  storageBucket: "sos-eficiencia.firebasestorage.app",
+  messagingSenderId: "106344320886",
+  appId: "1:106344320886:web:bcba55904e8620dabf7457",
+  measurementId: "G-N5NHXT8B30"
+};
+
+firebase.initializeApp(firebaseConfig);
+
+const auth = firebase.auth();
+
+const db = firebase.firestore();
+
+const realtimeDB = firebase.database();
+  async function googleLogin(){
+
+ const provider =
+ new firebase.auth.GoogleAuthProvider();
+
+ try{
+
+   const result =
+   await auth.signInWithPopup(provider);
+
+   const user = result.user;
+
+   alert("Bem-vindo " + user.displayName);
+
+ }catch(e){
+
+   console.error(e);
+
+   alert("Erro login");
+
+ }
+
+}
 </script>
 </body>
 </html>

@@ -2967,10 +2967,10 @@ init();
 
 // ---------- DADOS PADRÃO ----------
 const DEFAULT_PSYCHOLOGISTS = [
-  { id:'p1', nome:'Dra. Ana Paula Souza', spec:'Terapia Cognitivo-Comportamental', crp:'CRP 06/99999', fone:'999999999', email:'ana.paula@email.com', avatar:'👩‍⚕️' },
-  { id:'p2', nome:'Dr. Marcos Oliveira', spec:'Psicanálise e Ansiedade', crp:'CRP 06/88888', fone:'999999999', email:'marcos.oliveira@email.com', avatar:'👨‍⚕️' },
-  { id:'p3', nome:'Dra. Fernanda Lima', spec:'Saúde Mental Infanto-Juvenil', crp:'CRP 06/77777', fone:'999999999', email:'fernanda.lima@email.com', avatar:'👩‍⚕️' },
-  { id:'p4', nome:'Dr. Ricardo Alves', spec:'Depressão e Transtornos do Humor', crp:'CRP 06/66666', fone:'999999999', email:'ricardo.alves@email.com', avatar:'👨‍⚕️' },
+  { id:'p1', nome:'Dr. Sávio Soares', spec:'Terapia Cognitivo-Comportamental', fone:'8688248483', email:'ana.paula@email.com', avatar:'👨‍⚕️' },
+  { id:'p2', nome:'Dr. Marcos Oliveira', spec:'Psicanálise e Ansiedade', fone:'999999999', email:'marcos.oliveira@email.com', avatar:'👨‍⚕️' },
+  { id:'p3', nome:'Dra. Fernanda Lima', spec:'Saúde Mental Infanto-Juvenil', fone:'999999999', email:'fernanda.lima@email.com', avatar:'👩‍⚕️' },
+  { id:'p4', nome:'Dr. Ricardo Alves', spec:'Depressão e Transtornos do Humor', fone:'999999999', email:'ricardo.alves@email.com', avatar:'👨‍⚕️' },
 ];
 
 const DEFAULT_ADMIN_PW = '9784512';
@@ -2983,7 +2983,7 @@ let editingContactIdx = null;
 function getUsers() { return getData('users', []); }
 function setUsers(u) { setData('users', u); }
 function getAdmins() {
-  const a = getData('admins', null);
+  const a = getData('admins', null);  
   if (!a) { const d = [{ email:'admin@sos.com', pw: DEFAULT_ADMIN_PW }]; setData('admins', d); return d; }
   return a;
 }

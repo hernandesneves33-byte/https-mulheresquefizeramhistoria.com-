@@ -2,3612 +2,1823 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>S.O.S Eficiência</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Feministas Brasileiras — Trabalho Escolar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,400;1,400;1,600&display=swap" rel="stylesheet">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&family=DM+Serif+Display:ital@0;1&display=swap');
+/* ============================
+   RESET & BASE
+============================= */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  :root {
-    --purple: #6f6bd8;
-    --purple2: #8a5cff;
-    --purple3: #b39dff;
-    --purple-dark: #4a47a3;
-    --bg: #0d0b1a;
-    --bg2: #13102b;
-    --bg3: #1a1635;
-    --card: rgba(255,255,255,0.05);
-    --card2: rgba(255,255,255,0.08);
-    --text: #f0eeff;
-    --text2: #b8b0e0;
-    --text3: #7a72b0;
-    --border: rgba(111,107,216,0.2);
-    --glow: rgba(111,107,216,0.3);
-    --radius: 20px;
-    --radius-sm: 12px;
-    --tab-h: 72px;
-    --top-h: 60px;
-  }
+:root {
+  --roxo-profundo: #3D1A5C;
+  --roxo-medio: #6B3FA0;
+  --rosa-vibrante: #C2185B;
+  --rosa-claro: #F48FB1;
+  --dourado: #D4A017;
+  --dourado-claro: #F5D060;
+  --branco: #FDFAFF;
+  --branco-quente: #FFF5F9;
+  --cinza-leve: #F0E6F6;
+  --texto-escuro: #1A0A2E;
+  --texto-medio: #4A3060;
 
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  --glass-bg: rgba(255,255,255,0.08);
+  --glass-border: rgba(255,255,255,0.18);
+  --glass-shadow: 0 8px 32px rgba(61,26,92,0.25);
 
-  /* ====== PULL-TO-REFRESH DISABLED ====== */
-  /* Desativa overscroll/pull-to-refresh no Android WebView e browsers modernos */
-  html {
-    overscroll-behavior: none;
-    overscroll-behavior-y: none;
-    -webkit-overscroll-behavior: none;
-  }
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-accent: 'Cormorant Garamond', Georgia, serif;
 
-  html, body {
-    height: 100%; width: 100%;
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'DM Sans', system-ui, sans-serif;
-    overflow: hidden;
-    touch-action: pan-y;
-    -webkit-tap-highlight-color: transparent;
-    /* Previne rubber-band scroll no iOS e overscroll no Android */
-    overscroll-behavior: none;
-    overscroll-behavior-y: contain;
-  }
+  --transition: 0.35s cubic-bezier(0.4,0,0.2,1);
+  --radius: 16px;
+  --radius-lg: 24px;
+}
 
-  #canvas-bg {
-    position: fixed; inset: 0; z-index: 0;
-    pointer-events: none;
-  }
+html { scroll-behavior: smooth; }
 
-  #app {
-    position: relative; z-index: 1;
-    height: 100vh; width: 100%;
-    display: flex; flex-direction: column;
-    max-width: 480px; margin: 0 auto;
-  }
+body {
+  font-family: var(--font-body);
+  background: var(--branco);
+  color: var(--texto-escuro);
+  overflow-x: hidden;
+  line-height: 1.7;
+}
 
-  /* ====== SCROLL PROGRESS BAR ====== */
-  .scroll-progress-bar {
-    position: sticky;
-    top: 0;
-    left: 0;
-    width: 0%;
-    height: 3px;
-    background: linear-gradient(to right, var(--purple), var(--purple2), var(--purple3));
-    z-index: 50;
-    transition: width 0.1s linear;
-    border-radius: 0 3px 3px 0;
-    box-shadow: 0 0 10px rgba(111,107,216,0.6);
-    flex-shrink: 0;
-    margin-bottom: -3px;
-  }
+/* ============================
+   SCROLLBAR
+============================= */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--cinza-leve); }
+::-webkit-scrollbar-thumb { background: var(--roxo-medio); border-radius: 99px; }
 
-  /* TOP BAR */
-  .topbar {
-    height: var(--top-h);
-    display: flex; align-items: center;
-    justify-content: space-between;
-    padding: 0 20px;
-    background: rgba(13,11,26,0.8);
-    backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--border);
-    flex-shrink: 0;
-    position: relative; z-index: 10;
-  }
+/* ============================
+   NAV
+============================= */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  background: rgba(61,26,92,0.85);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgba(255,255,255,0.12);
+  padding: 0 2rem;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: background var(--transition);
+}
 
-  .topbar-logo {
-    font-family: 'DM Serif Display', serif;
-    font-size: 1.1rem;
-    background: linear-gradient(135deg, var(--purple3), var(--purple2));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    letter-spacing: -0.02em;
-  }
+.nav-logo {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  color: var(--dourado-claro);
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+}
 
-  .sos-btn {
-    background: linear-gradient(135deg, #e85d8a, #c23f6a);
-    border: none; border-radius: 50px;
-    color: white; font-family: 'DM Sans', sans-serif;
-    font-size: 0.72rem; font-weight: 600;
-    padding: 7px 14px; cursor: pointer;
-    display: flex; align-items: center; gap: 5px;
-    box-shadow: 0 0 20px rgba(232,93,138,0.4);
-    transition: all 0.2s;
-    animation: pulse-sos 2.5s ease-in-out infinite;
-  }
+.nav-links {
+  display: flex;
+  gap: 0.25rem;
+  list-style: none;
+}
 
-  .sos-btn.crisis { animation: pulse-sos-fast 1s ease-in-out infinite; box-shadow: 0 0 30px rgba(232,93,138,0.7); }
+.nav-links a {
+  color: rgba(255,255,255,0.85);
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 0.4rem 0.75rem;
+  border-radius: 99px;
+  transition: background var(--transition), color var(--transition);
+}
 
-  @keyframes pulse-sos {
-    0%,100% { box-shadow: 0 0 20px rgba(232,93,138,0.4); }
-    50% { box-shadow: 0 0 30px rgba(232,93,138,0.7); }
-  }
-  @keyframes pulse-sos-fast {
-    0%,100% { box-shadow: 0 0 20px rgba(232,93,138,0.5); transform: scale(1); }
-    50% { box-shadow: 0 0 40px rgba(232,93,138,0.9); transform: scale(1.05); }
-  }
+.nav-links a:hover {
+  background: rgba(255,255,255,0.12);
+  color: var(--dourado-claro);
+}
 
-  .streak-badge {
-    display: flex; align-items: center; gap: 4px;
-    background: rgba(255,193,7,0.15); border: 1px solid rgba(255,193,7,0.3);
-    border-radius: 50px; padding: 5px 10px;
-    font-size: 0.72rem; font-weight: 600; color: #ffd04b;
-  }
+/* Hamburguer */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  padding: 4px;
+  background: none;
+  border: none;
+}
+.hamburger span {
+  display: block;
+  width: 24px; height: 2px;
+  background: #fff;
+  border-radius: 2px;
+  transition: var(--transition);
+}
 
-  /* PAGES */
-  .pages {
-    flex: 1; overflow: hidden; position: relative;
-  }
-
-  .page {
-    position: absolute; inset: 0;
-    overflow-y: auto; overflow-x: hidden;
-    padding: 0 20px calc(var(--tab-h) + 20px);
-    opacity: 0; pointer-events: none;
-    transform: translateY(12px);
-    transition: opacity 0.3s ease, transform 0.3s ease;
-    scrollbar-width: none;
-    /* Previne pull-to-refresh em cada página individualmente */
-    overscroll-behavior: contain;
-    overscroll-behavior-y: contain;
-    -webkit-overflow-scrolling: touch;
-  }
-  .page::-webkit-scrollbar { display: none; }
-  .page.active { opacity: 1; pointer-events: all; transform: translateY(0); }
-
-  /* Page inner scroll padding */
-  .page-inner {
-    padding-top: 20px;
-  }
-
-  /* BOTTOM NAV */
-  .bottom-nav {
-    height: var(--tab-h);
-    display: flex;
-    background: rgba(13,11,26,0.9);
-    backdrop-filter: blur(30px);
-    border-top: 1px solid var(--border);
-    flex-shrink: 0;
-    position: relative; z-index: 10;
-  }
-
-  .nav-btn {
-    flex: 1; display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    gap: 4px; border: none; background: none;
-    color: var(--text3); cursor: pointer;
-    transition: color 0.2s, transform 0.2s;
-    font-size: 0.6rem; font-weight: 500;
-    letter-spacing: 0.03em; text-transform: uppercase;
-    -webkit-tap-highlight-color: transparent;
-  }
-
-  .nav-btn .nav-icon { font-size: 1.3rem; transition: transform 0.2s; }
-  .nav-btn.active { color: var(--purple3); }
-  .nav-btn.active .nav-icon { transform: scale(1.2); }
-  .nav-btn:active { transform: scale(0.9); }
-
-  /* CARDS */
-  .card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 20px;
-    backdrop-filter: blur(10px);
-    margin-bottom: 14px;
-  }
-
-  .card-glow {
-    background: linear-gradient(135deg, rgba(111,107,216,0.12), rgba(138,92,255,0.08));
-    border-color: rgba(111,107,216,0.3);
-  }
-
-  .section-title {
-    font-size: 0.72rem; font-weight: 600;
-    letter-spacing: 0.1em; text-transform: uppercase;
-    color: var(--purple3); margin-bottom: 14px;
-  }
-
-  /* QUOTE */
-  .quote-card {
-    background: linear-gradient(135deg, rgba(111,107,216,0.15), rgba(138,92,255,0.1));
-    border: 1px solid rgba(111,107,216,0.3);
-    border-radius: var(--radius);
-    padding: 24px 22px;
-    margin-bottom: 14px;
-    position: relative; overflow: hidden;
-  }
-
-  .quote-card::before {
-    content: '"'; position: absolute;
-    top: -10px; right: 16px;
-    font-family: 'DM Serif Display', serif;
-    font-size: 8rem; color: rgba(111,107,216,0.1);
-    line-height: 1;
-  }
-
-  .quote-text {
-    font-family: 'DM Serif Display', serif;
-    font-size: 1.15rem; line-height: 1.5;
-    color: var(--text); font-style: italic;
-    position: relative; z-index: 1;
-  }
-
-  .quote-author {
-    margin-top: 10px; font-size: 0.75rem;
-    color: var(--purple3); font-weight: 500;
-  }
-
-  /* EMOTIONS */
-  .emotion-grid {
-    display: grid; grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-  }
-
-  .emotion-btn {
-    background: var(--card2);
-    border: 1.5px solid var(--border);
-    border-radius: var(--radius-sm);
-    padding: 14px 8px;
-    display: flex; flex-direction: column;
-    align-items: center; gap: 6px;
-    cursor: pointer;
-    transition: all 0.2s;
-    font-size: 0.65rem; color: var(--text2);
-    font-weight: 500;
-  }
-
-  .emotion-btn .em { font-size: 1.6rem; display: block; }
-  .emotion-btn:active, .emotion-btn.selected {
-    border-color: var(--purple);
-    background: rgba(111,107,216,0.2);
-    color: var(--text);
-    transform: scale(0.96);
-  }
-
-  /* WEEK CHART */
-  .week-chart-container {
-    position: relative;
-  }
-
-  .week-chart {
-    display: flex; justify-content: space-between;
-    align-items: flex-end; gap: 8px;
-    height: 100px; padding: 0 4px;
-    position: relative;
-  }
-
-  .week-chart-grid {
-    position: absolute; inset: 0;
-    display: flex; flex-direction: column;
-    justify-content: space-between;
-    pointer-events: none; padding: 0 4px;
-  }
-
-  .chart-grid-line {
-    width: 100%; height: 1px;
-    background: rgba(111,107,216,0.08);
-  }
-
-  .day-bar-wrap {
-    flex: 1; display: flex; flex-direction: column;
-    align-items: center; gap: 6px; cursor: pointer;
-    transition: opacity 0.2s;
-    height: 100%;
-    justify-content: flex-end;
-    position: relative;
-  }
-  .day-bar-wrap:active { opacity: 0.7; }
-
-  .day-bar {
-    width: 100%; border-radius: 8px 8px 4px 4px;
-    background: var(--card2);
-    transition: height 0.6s cubic-bezier(0.34,1.56,0.64,1);
-    min-height: 4px;
-    position: relative; overflow: hidden;
-  }
-
-  .day-bar.filled {
-    background: linear-gradient(to top, var(--purple-dark), var(--purple3));
-    box-shadow: 0 0 12px rgba(111,107,216,0.3);
-  }
-
-  .day-bar.filled::after {
-    content: '';
+/* Mobile nav */
+@media (max-width: 860px) {
+  .hamburger { display: flex; }
+  .nav-links {
+    display: none;
     position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 40%;
-    background: linear-gradient(to bottom, rgba(255,255,255,0.12), transparent);
-  }
-
-  .day-bar.today-bar {
-    background: linear-gradient(to top, #8a5cff, #b39dff);
-    box-shadow: 0 0 20px rgba(138,92,255,0.5);
-  }
-
-  .day-label {
-    font-size: 0.6rem; color: var(--text3); font-weight: 500;
-    transition: color 0.3s;
-  }
-
-  .day-bar-wrap.today-wrap .day-label {
-    color: var(--purple3);
-    font-weight: 700;
-  }
-
-  .chart-tooltip {
-    position: absolute;
-    bottom: calc(100% + 8px);
-    left: 50%; transform: translateX(-50%);
-    background: rgba(26,22,53,0.95);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 6px 10px;
-    font-size: 0.7rem; color: var(--text);
-    white-space: nowrap;
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.2s, transform 0.2s;
-    transform: translateX(-50%) translateY(4px);
-    z-index: 5;
-  }
-
-  .day-bar-wrap:hover .chart-tooltip,
-  .day-bar-wrap:focus .chart-tooltip {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
-  }
-
-  /* QUICK ACTIONS */
-  .quick-grid {
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: 10px;
-  }
-
-  .quick-btn {
-    background: var(--card2);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    padding: 16px;
-    display: flex; align-items: center; gap: 10px;
-    cursor: pointer;
-    transition: all 0.2s;
-    color: var(--text2); font-size: 0.8rem; font-weight: 500;
-    text-align: left;
-  }
-
-  .quick-btn .qi { font-size: 1.4rem; }
-  .quick-btn:active {
-    background: rgba(111,107,216,0.15);
-    border-color: var(--purple);
-    transform: scale(0.97);
-  }
-
-  /* EXERCISES */
-  .exercise-tabs {
-    display: flex; gap: 8px;
-    overflow-x: auto; padding-bottom: 4px;
-    scrollbar-width: none; margin-bottom: 16px;
-  }
-  .exercise-tabs::-webkit-scrollbar { display: none; }
-
-  .ex-tab {
-    flex-shrink: 0;
-    background: var(--card2);
-    border: 1px solid var(--border);
-    border-radius: 50px;
-    padding: 8px 14px;
-    font-size: 0.72rem; font-weight: 500;
-    color: var(--text2); cursor: pointer;
-    transition: all 0.2s; white-space: nowrap;
-  }
-
-  .ex-tab.active {
-    background: var(--purple);
-    border-color: var(--purple);
-    color: white;
-  }
-
-  .exercise-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 20px; margin-bottom: 12px;
-    cursor: pointer;
-    transition: all 0.25s;
-  }
-
-  .exercise-card:active { transform: scale(0.98); }
-
-  .ex-header {
-    display: flex; justify-content: space-between;
-    align-items: flex-start; margin-bottom: 8px;
-  }
-
-  .ex-title { font-size: 0.95rem; font-weight: 600; color: var(--text); }
-  .ex-icon { font-size: 1.5rem; }
-  .ex-desc { font-size: 0.8rem; color: var(--text2); line-height: 1.5; margin-bottom: 14px; }
-
-  .ex-start-btn {
-    background: linear-gradient(135deg, var(--purple), var(--purple2));
-    border: none; border-radius: 50px;
-    color: white; font-family: 'DM Sans', sans-serif;
-    font-size: 0.8rem; font-weight: 600;
-    padding: 10px 20px; cursor: pointer;
-    transition: all 0.2s;
-  }
-  .ex-start-btn:active { transform: scale(0.97); opacity: 0.9; }
-
-  /* BREATHING */
-  .breath-container {
-    display: flex; flex-direction: column;
-    align-items: center; padding: 20px 0;
-  }
-
-  .breath-circle-wrap {
-    position: relative; width: 180px; height: 180px;
-    margin: 20px auto;
-  }
-
-  .breath-ring {
-    position: absolute; inset: 0; border-radius: 50%;
-    border: 2px solid rgba(111,107,216,0.3);
-    animation: none;
-  }
-
-  .breath-core {
-    position: absolute;
-    inset: 20px; border-radius: 50%;
-    background: radial-gradient(circle, var(--purple2), var(--purple-dark));
-    display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 0 40px var(--glow);
-    transition: all 0.5s ease;
-  }
-
-  .breath-text-inner {
-    font-size: 0.8rem; color: white; font-weight: 500;
-    text-align: center; line-height: 1.3;
-  }
-
-  .breath-phase {
-    font-size: 1rem; font-weight: 600;
-    color: var(--purple3); margin-top: 8px;
-    min-height: 1.5rem; text-align: center;
-    transition: opacity 0.4s;
-  }
-
-  .breath-count {
-    font-size: 2.5rem; font-weight: 300;
-    color: var(--text); font-family: 'DM Serif Display', serif;
-    min-height: 3rem; text-align: center;
-  }
-
-  @keyframes breathe-in {
-    from { transform: scale(1); box-shadow: 0 0 20px var(--glow); }
-    to { transform: scale(1.4); box-shadow: 0 0 60px rgba(111,107,216,0.6); }
-  }
-  @keyframes breathe-out {
-    from { transform: scale(1.4); box-shadow: 0 0 60px rgba(111,107,216,0.6); }
-    to { transform: scale(1); box-shadow: 0 0 20px var(--glow); }
-  }
-  @keyframes breathe-hold {
-    from, to { transform: scale(1.4); }
-  }
-
-  .breath-controls {
-    display: flex; gap: 12px; margin-top: 16px;
-  }
-
-  .ctrl-btn {
-    background: var(--card2);
-    border: 1px solid var(--border);
-    border-radius: 50px; padding: 12px 24px;
-    color: var(--text); cursor: pointer;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.85rem; font-weight: 600;
-    transition: all 0.2s;
-  }
-  .ctrl-btn.primary {
-    background: linear-gradient(135deg, var(--purple), var(--purple2));
-    border-color: transparent; color: white;
-  }
-  .ctrl-btn:active { transform: scale(0.95); }
-
-  /* DIARY */
-  .diary-textarea {
-    width: 100%; min-height: 140px;
-    background: var(--card2);
-    border: 1.5px solid var(--border);
-    border-radius: var(--radius-sm);
-    color: var(--text); font-family: 'DM Sans', sans-serif;
-    font-size: 0.9rem; padding: 14px;
-    resize: none; outline: none;
-    transition: border-color 0.2s;
-    line-height: 1.6;
-  }
-  .diary-textarea:focus { border-color: var(--purple); }
-  .diary-textarea::placeholder { color: var(--text3); }
-
-  .char-counter {
-    text-align: right;
-    font-size: 0.68rem;
-    color: var(--text3);
-    margin-top: 6px;
-    transition: color 0.2s;
-  }
-  .char-counter.has-text { color: var(--purple3); }
-
-  .autosave-indicator {
-    display: flex; align-items: center; gap: 6px;
-    font-size: 0.7rem; color: var(--text3);
-    margin-top: 4px; min-height: 20px;
-    transition: all 0.3s;
-  }
-  .autosave-indicator.saving { color: var(--purple3); }
-  .autosave-indicator.saved { color: #4da87a; }
-  .autosave-indicator .dot {
-    width: 6px; height: 6px; border-radius: 50%;
-    background: currentColor;
-    animation: none;
-  }
-  .autosave-indicator.saving .dot { animation: blink 0.8s ease-in-out infinite; }
-  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
-
-  .save-btn {
-    width: 100%; margin-top: 10px;
-    background: linear-gradient(135deg, var(--purple), var(--purple2));
-    border: none; border-radius: var(--radius-sm);
-    color: white; font-family: 'DM Sans', sans-serif;
-    font-size: 0.9rem; font-weight: 600;
-    padding: 14px; cursor: pointer;
-    transition: all 0.2s;
-    display: flex; align-items: center; justify-content: center; gap: 8px;
-  }
-  .save-btn:active { opacity: 0.85; transform: scale(0.98); }
-  .save-btn:disabled { opacity: 0.4; cursor: not-allowed; }
-
-  .diary-entry {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    padding: 16px; margin-bottom: 10px;
-    transition: border-color 0.2s;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .diary-entry::before {
-    content: '';
-    position: absolute;
-    left: 0; top: 0; bottom: 0;
-    width: 3px;
-    background: linear-gradient(to bottom, var(--purple), var(--purple3));
-    border-radius: 3px 0 0 3px;
-  }
-
-  .diary-entry:hover { border-color: rgba(111,107,216,0.35); }
-
-  .entry-meta {
-    display: flex; justify-content: space-between;
-    align-items: center; margin-bottom: 8px;
-  }
-
-  .entry-date { font-size: 0.7rem; color: var(--purple3); font-weight: 600; }
-  .entry-emotion { font-size: 0.68rem; color: var(--text3); margin-top: 2px; }
-
-  .entry-actions { display: flex; gap: 8px; }
-
-  .entry-action {
-    background: none; border: none;
-    color: var(--text3); cursor: pointer;
-    font-size: 0.75rem; padding: 4px 8px;
-    border-radius: 6px; transition: all 0.2s;
-  }
-  .entry-action:hover { color: var(--text); background: var(--card2); }
-  .entry-action.delete:hover { color: #e85d8a; }
-
-  .entry-text { font-size: 0.85rem; color: var(--text2); line-height: 1.6; }
-
-  .entry-text.collapsed {
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-
-  .expand-btn {
-    background: none; border: none;
-    color: var(--purple3); font-size: 0.72rem;
-    cursor: pointer; padding: 4px 0;
-    font-weight: 500;
-  }
-
-  .diary-empty {
-    text-align: center; padding: 32px 20px;
-    color: var(--text3); font-size: 0.85rem;
-  }
-  .diary-empty-icon { font-size: 3rem; margin-bottom: 12px; opacity: 0.5; }
-
-  .diary-search {
-    width: 100%;
-    background: var(--card2);
-    border: 1.5px solid var(--border);
-    border-radius: var(--radius-sm);
-    color: var(--text);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.85rem; padding: 10px 14px;
-    outline: none; margin-bottom: 12px;
-    transition: border-color 0.2s;
-  }
-  .diary-search:focus { border-color: var(--purple); }
-  .diary-search::placeholder { color: var(--text3); }
-
-  /* LIBRARY */
-  .lib-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 18px 20px; margin-bottom: 10px;
-    cursor: pointer; transition: all 0.2s;
-    display: flex; align-items: center; justify-content: space-between;
-  }
-  .lib-card:active { transform: scale(0.98); border-color: var(--purple); }
-
-  .lib-info { display: flex; align-items: center; gap: 14px; }
-  .lib-icon { font-size: 1.5rem; }
-  .lib-title { font-size: 0.9rem; font-weight: 600; color: var(--text); }
-  .lib-sub { font-size: 0.72rem; color: var(--text3); margin-top: 2px; }
-  .lib-arrow { color: var(--text3); font-size: 0.8rem; }
-
-  /* PROFILE */
-  .profile-avatar {
-    width: 70px; height: 70px; border-radius: 50%;
-    background: linear-gradient(135deg, var(--purple), var(--purple2));
-    display: flex; align-items: center; justify-content: center;
-    font-size: 2rem; margin: 0 auto 12px;
-    box-shadow: 0 0 30px var(--glow);
-  }
-
-  .stat-grid {
-    display: grid; grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-  }
-
-  .stat-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    padding: 14px; text-align: center;
-  }
-
-  .stat-value {
-    font-family: 'DM Serif Display', serif;
-    font-size: 1.8rem; color: var(--purple3);
-    line-height: 1;
-  }
-
-  .stat-label {
-    font-size: 0.65rem; color: var(--text3);
-    margin-top: 4px; font-weight: 500;
-    text-transform: uppercase; letter-spacing: 0.05em;
-  }
-
-  .action-btn {
-    width: 100%; background: var(--card2);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    color: var(--text); font-family: 'DM Sans', sans-serif;
-    font-size: 0.85rem; font-weight: 500;
-    padding: 14px 18px; cursor: pointer;
-    text-align: left; transition: all 0.2s;
-    display: flex; align-items: center; gap: 10px;
-    margin-bottom: 10px;
-  }
-  .action-btn:active { transform: scale(0.98); border-color: var(--purple); }
-  .danger-btn { color: #e85d8a; border-color: rgba(232,93,138,0.3); }
-
-  /* MODALS */
-  .modal-overlay {
-    position: fixed; inset: 0; z-index: 100;
-    background: rgba(0,0,0,0.7);
-    backdrop-filter: blur(8px);
-    display: flex; align-items: flex-end;
-    justify-content: center;
-    opacity: 0; pointer-events: none;
-    transition: opacity 0.3s;
-  }
-  .modal-overlay.open { opacity: 1; pointer-events: all; }
-
-  .modal {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: var(--radius) var(--radius) 0 0;
-    width: 100%; max-width: 480px;
-    padding: 24px 22px 36px;
-    transform: translateY(30px);
-    transition: transform 0.35s cubic-bezier(0.34,1.2,0.64,1);
-    max-height: 80vh; overflow-y: auto;
-    scrollbar-width: none;
-  }
-  .modal::-webkit-scrollbar { display: none; }
-  .modal-overlay.open .modal { transform: translateY(0); }
-
-  .modal-handle {
-    width: 40px; height: 4px;
-    background: var(--text3); border-radius: 4px;
-    margin: 0 auto 20px;
-  }
-
-  .modal-title {
-    font-family: 'DM Serif Display', serif;
-    font-size: 1.3rem; margin-bottom: 12px;
-    color: var(--text);
-  }
-
-  .modal-body { color: var(--text2); font-size: 0.88rem; line-height: 1.7; }
-
-  .modal-close {
-    width: 100%; margin-top: 18px;
-    background: var(--card2);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    color: var(--text); font-family: 'DM Sans', sans-serif;
-    font-size: 0.9rem; font-weight: 600;
-    padding: 14px; cursor: pointer; transition: all 0.2s;
-  }
-  .modal-close:active { opacity: 0.8; }
-
-  /* SOS MODAL */
-  .sos-modal-content { text-align: center; }
-  .sos-heart { font-size: 3rem; margin-bottom: 12px; }
-
-  .sos-msg {
-    font-family: 'DM Serif Display', serif;
-    font-size: 1.2rem; margin-bottom: 8px; color: var(--text);
-  }
-
-  .sos-sub { font-size: 0.85rem; color: var(--text2); line-height: 1.6; margin-bottom: 20px; }
-
-  .call-btn {
-    width: 100%;
-    background: linear-gradient(135deg, #e85d8a, #c23f6a);
-    border: none; border-radius: var(--radius-sm);
-    color: white; font-family: 'DM Sans', sans-serif;
-    font-size: 1rem; font-weight: 700;
-    padding: 16px; cursor: pointer;
-    transition: all 0.2s; margin-bottom: 10px;
-    display: flex; align-items: center; justify-content: center; gap: 8px;
-  }
-  .call-btn:active { opacity: 0.85; transform: scale(0.98); }
-
-  /* EXERCISE MODAL */
-  .ex-modal-timer {
-    text-align: center; padding: 16px 0;
-  }
-
-  .ex-timer-display {
-    font-family: 'DM Serif Display', serif;
-    font-size: 3.5rem; color: var(--purple3);
-    margin-bottom: 8px;
-  }
-
-  .ex-timer-label { font-size: 0.85rem; color: var(--text2); min-height: 1.4rem; }
-
-  /* ACHIEVEMENTS */
-  .achievement-row {
-    display: flex; align-items: center; gap: 14px;
-    padding: 12px 0;
-    border-bottom: 1px solid var(--border);
-  }
-  .achievement-row:last-child { border-bottom: none; }
-
-  .ach-icon { font-size: 1.6rem; }
-  .ach-info { flex: 1; }
-  .ach-name { font-size: 0.85rem; font-weight: 600; color: var(--text); }
-  .ach-desc { font-size: 0.72rem; color: var(--text3); }
-  .ach-badge {
-    width: 24px; height: 24px; border-radius: 50%;
-    background: var(--card2); border: 1px solid var(--border);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 0.65rem;
-  }
-  .ach-badge.unlocked {
-    background: linear-gradient(135deg, var(--purple), var(--purple2));
-    border-color: transparent;
-  }
-
-  /* TOAST */
-  .toast {
-    position: fixed; bottom: calc(var(--tab-h) + 16px);
-    left: 50%; transform: translateX(-50%) translateY(20px);
-    background: rgba(111,107,216,0.9);
-    backdrop-filter: blur(20px);
-    color: white; border-radius: 50px;
-    padding: 10px 20px; font-size: 0.82rem; font-weight: 500;
-    z-index: 200; opacity: 0;
-    transition: all 0.35s cubic-bezier(0.34,1.3,0.64,1);
-    white-space: nowrap;
-    max-width: calc(100vw - 40px);
-    text-align: center;
-  }
-  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-
-  /* CRISIS BANNER */
-  .crisis-banner {
-    background: linear-gradient(135deg, rgba(232,93,138,0.15), rgba(194,63,106,0.1));
-    border: 1px solid rgba(232,93,138,0.4);
-    border-radius: var(--radius-sm);
-    padding: 14px 16px; margin-bottom: 14px;
-    display: none; align-items: center; gap: 10px;
-  }
-  .crisis-banner.show { display: flex; }
-  .crisis-banner p { font-size: 0.82rem; color: #f0a0c0; line-height: 1.5; }
-
-  .info-badge {
-    background: rgba(179,157,255,0.12);
-    border: 1px solid rgba(179,157,255,0.2);
-    border-radius: 8px; padding: 12px 14px;
-    font-size: 0.75rem; color: var(--text3);
-    line-height: 1.6; text-align: center;
-  }
-
-  .team-name { font-size: 0.82rem; color: var(--text2); padding: 6px 0; border-bottom: 1px solid var(--border); }
-  .team-name:last-child { border-bottom: none; }
-  .team-role { font-size: 0.7rem; color: var(--purple3); font-weight: 500; }
-
-  /* Animations */
-  @keyframes fadeUp {
-    from { opacity:0; transform: translateY(16px); }
-    to { opacity:1; transform: translateY(0); }
-  }
-  .fade-up { animation: fadeUp 0.4s ease both; }
-  .delay-1 { animation-delay: 0.05s; }
-  .delay-2 { animation-delay: 0.1s; }
-  .delay-3 { animation-delay: 0.15s; }
-  .delay-4 { animation-delay: 0.2s; }
-
-  /* MOOD LINE CHART */
-  .mood-line-chart {
-    width: 100%; height: 60px; margin-top: 8px;
-  }
-
-  .week-chart-wrap {
-    margin-bottom: 0;
-  }
-
-  /* ====================================================
-     FLOATING ACTION BUTTONS — NOVO
-     Botões flutuantes modernos para navegação rápida
-     Posicionados acima da bottom nav, canto direito
-  ===================================================== */
-  .fab-group {
-    position: fixed;
-    right: 16px;
-    bottom: calc(var(--tab-h) + 16px);
-    z-index: 90;
-    display: flex;
+    top: 64px; left: 0; right: 0;
     flex-direction: column;
-    align-items: flex-end;
-    gap: 10px;
-    /* Garante que fique centralizado igual ao app (max 480px) */
-    max-width: calc(480px - 32px);
+    background: rgba(40,10,70,0.97);
+    padding: 1rem;
+    gap: 0;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
   }
+  .nav-links.open { display: flex; }
+  .nav-links a { padding: 0.75rem 1rem; border-radius: var(--radius); }
+}
 
-  /* Quando o viewport for maior que 480px, alinha com o app */
-  @media (min-width: 480px) {
-    .fab-group {
-      right: calc(50% - 480px/2 + 16px);
-    }
-  }
+/* ============================
+   HERO
+============================= */
+#hero {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1A0438 0%, #3D1A5C 40%, #6B3FA0 75%, #C2185B 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  padding: 8rem 2rem 5rem;
+}
 
-  .fab-btn {
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    border: 1px solid rgba(111,107,216,0.35);
-    background: rgba(19, 16, 43, 0.88);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    color: var(--purple3);
-    font-size: 1.1rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    box-shadow:
-      0 4px 20px rgba(0,0,0,0.4),
-      0 0 0 1px rgba(111,107,216,0.1),
-      inset 0 1px 0 rgba(255,255,255,0.06);
-    transition:
-      transform 0.18s cubic-bezier(0.34,1.56,0.64,1),
-      box-shadow 0.2s ease,
-      background 0.2s ease,
-      opacity 0.3s ease;
-    /* Desativa highlight em tap Android */
-    -webkit-tap-highlight-color: transparent;
-    user-select: none;
-    -webkit-user-select: none;
-    /* Opacidade reduzida por padrão para não poluir a tela */
-    opacity: 0.55;
-  }
+/* Floating orbs */
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.35;
+  animation: float 8s ease-in-out infinite;
+  pointer-events: none;
+}
+.orb-1 { width: 500px; height: 500px; background: var(--rosa-vibrante); top: -150px; right: -100px; animation-delay: 0s; }
+.orb-2 { width: 350px; height: 350px; background: var(--dourado); bottom: -80px; left: -80px; animation-delay: -3s; }
+.orb-3 { width: 250px; height: 250px; background: #9B59B6; top: 40%; left: 20%; animation-delay: -6s; }
 
-  .fab-btn:hover,
-  .fab-btn:focus-visible {
-    opacity: 1;
-    box-shadow:
-      0 6px 24px rgba(111,107,216,0.35),
-      0 0 0 1px rgba(111,107,216,0.3),
-      inset 0 1px 0 rgba(255,255,255,0.08);
-  }
+@keyframes float {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-30px) scale(1.06); }
+}
 
-  .fab-btn:active {
-    transform: scale(0.88);
-    opacity: 1;
-    box-shadow:
-      0 2px 10px rgba(111,107,216,0.2),
-      inset 0 1px 0 rgba(255,255,255,0.04);
-  }
+/* Star particles */
+.stars {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.star {
+  position: absolute;
+  width: 2px; height: 2px;
+  background: #fff;
+  border-radius: 50%;
+  opacity: 0;
+  animation: twinkle 3s ease-in-out infinite;
+}
+@keyframes twinkle {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 0.8; }
+}
 
-  /* Botão de topo — sobe: aparece só quando há scroll */
-  .fab-btn.fab-top {
-    opacity: 0;
-    pointer-events: none;
-    transform: translateY(6px);
-  }
-  .fab-btn.fab-top.visible {
-    opacity: 0.55;
-    pointer-events: auto;
-    transform: translateY(0);
-  }
-  .fab-btn.fab-top.visible:hover,
-  .fab-btn.fab-top.visible:focus-visible {
-    opacity: 1;
-  }
+.hero-content { position: relative; z-index: 1; max-width: 820px; }
 
-  /* Botão reload — destaque especial */
-  .fab-btn.fab-reload {
-    background: rgba(19, 16, 43, 0.88);
-    color: var(--purple3);
-  }
+.hero-eyebrow {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--dourado-claro);
+  border: 1px solid rgba(212,160,23,0.4);
+  padding: 0.4rem 1.2rem;
+  border-radius: 99px;
+  margin-bottom: 1.5rem;
+  backdrop-filter: blur(8px);
+  background: rgba(212,160,23,0.08);
+  opacity: 0;
+  animation: fadeUp 0.8s 0.2s forwards;
+}
 
-  /* Animação de giro no reload */
-  .fab-btn.fab-reload.spinning svg,
-  .fab-btn.fab-reload.spinning .fab-icon {
-    animation: spinOnce 0.5s ease-in-out;
-  }
+.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.8rem, 7vw, 5.5rem);
+  font-weight: 900;
+  color: #fff;
+  line-height: 1.08;
+  margin-bottom: 1.5rem;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.4s forwards;
+}
 
-  @keyframes spinOnce {
-    from { transform: rotate(0deg); }
-    to   { transform: rotate(360deg); }
-  }
+.hero-title span {
+  background: linear-gradient(90deg, var(--dourado-claro), var(--rosa-claro));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
 
-  /* Tooltip nos FABs */
-  .fab-btn[data-tip]::before {
-    content: attr(data-tip);
-    position: absolute;
-    right: calc(100% + 10px);
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(19, 16, 43, 0.95);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 5px 10px;
-    font-size: 0.68rem;
-    font-family: 'DM Sans', sans-serif;
-    color: var(--text2);
-    white-space: nowrap;
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.15s;
-  }
+.hero-subtitle {
+  font-family: var(--font-accent);
+  font-size: clamp(1.1rem, 2.2vw, 1.4rem);
+  font-style: italic;
+  color: rgba(255,255,255,0.8);
+  max-width: 640px;
+  margin: 0 auto 2.5rem;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.6s forwards;
+}
 
-  .fab-btn[data-tip]:hover::before {
-    opacity: 1;
-  }
+.hero-cta {
+  display: inline-flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.8s forwards;
+}
 
-  /* Ícone dentro do FAB (texto/emoji) */
-  .fab-icon {
-    line-height: 1;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-style: normal;
-    transition: transform 0.18s;
-    /* Tamanho ligeiramente menor para caber bem */
-    font-size: 1rem;
-  }
+.btn-primary {
+  display: inline-block;
+  text-decoration: none;
+  background: linear-gradient(135deg, var(--rosa-vibrante), var(--roxo-medio));
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.9rem;
+  letter-spacing: 0.04em;
+  padding: 0.85rem 2rem;
+  border-radius: 99px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(194,24,91,0.4);
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(194,24,91,0.55); }
 
-  /* Separador visual entre os 3 botões */
-  .fab-divider {
-    width: 1px;
-    height: 0;
-    /* Só visual no hover do grupo */
-  }
+.btn-secondary {
+  display: inline-block;
+  text-decoration: none;
+  background: var(--glass-bg);
+  color: #fff;
+  font-weight: 500;
+  font-size: 0.9rem;
+  letter-spacing: 0.04em;
+  padding: 0.85rem 2rem;
+  border-radius: 99px;
+  border: 1px solid var(--glass-border);
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition: background var(--transition);
+}
+.btn-secondary:hover { background: rgba(255,255,255,0.15); }
 
-  /* ====================================================
-     NOVAS FUNCIONALIDADES — CSS ADICIONAL
-  ===================================================== */
+.hero-scroll-hint {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(255,255,255,0.5);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  animation: bounce 2s ease-in-out infinite;
+}
+.hero-scroll-hint::after {
+  content: '';
+  display: block;
+  width: 1px; height: 40px;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.5), transparent);
+}
+@keyframes bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(6px); }
+}
 
-  /* --- TELA DE LOGIN --- */
-  #login-screen {
-    position: fixed; inset: 0; z-index: 500;
-    background: var(--bg);
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    padding: 32px 20px;
-    overflow-y: auto;
-    transition: opacity 0.4s ease;
-  }
-  #login-screen.hidden { opacity: 0; pointer-events: none; }
-  .login-logo {
-    font-family: 'DM Serif Display', serif; font-size: 2rem;
-    background: linear-gradient(135deg, var(--purple3), var(--purple2));
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    background-clip: text; text-align: center; margin-bottom: 6px;
-  }
-  .login-tagline { font-size: 0.82rem; color: var(--text3); text-align: center; margin-bottom: 36px; line-height: 1.5; }
-  .login-card {
-    width: 100%; max-width: 380px;
-    background: var(--card); border: 1px solid var(--border);
-    border-radius: var(--radius); padding: 26px 22px;
-    backdrop-filter: blur(10px);
-  }
-  .login-tabs {
-    display: flex; gap: 4px;
-    background: rgba(0,0,0,0.3); border-radius: 10px; padding: 4px;
-    margin-bottom: 22px;
-  }
-  .login-tab {
-    flex: 1; padding: 9px; border: none; border-radius: 8px;
-    background: none; color: var(--text3);
-    font-family: 'DM Sans', sans-serif; font-size: 0.82rem; font-weight: 600;
-    cursor: pointer; transition: all 0.2s;
-  }
-  .login-tab.active { background: var(--purple); color: white; }
-  .login-form { display: flex; flex-direction: column; gap: 12px; }
-  .login-form-group { display: flex; flex-direction: column; gap: 5px; }
-  .login-label { font-size: 0.72rem; color: var(--text3); font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; }
-  .login-input {
-    width: 100%; background: var(--card2); border: 1.5px solid var(--border);
-    border-radius: var(--radius-sm); color: var(--text);
-    font-family: 'DM Sans', sans-serif; font-size: 0.9rem; padding: 11px 14px;
-    outline: none; transition: border-color 0.2s;
-    -webkit-user-select: text; user-select: text;
-  }
-  .login-input:focus { border-color: var(--purple); }
-  .login-input::placeholder { color: var(--text3); }
-  .login-btn {
-    width: 100%; padding: 14px;
-    background: linear-gradient(135deg, var(--purple), var(--purple2));
-    border: none; border-radius: var(--radius-sm); color: white;
-    font-family: 'DM Sans', sans-serif; font-size: 0.95rem; font-weight: 700;
-    cursor: pointer; transition: all 0.2s;
-    display: flex; align-items: center; justify-content: center; gap: 8px;
-  }
-  .login-btn:active { opacity: 0.85; transform: scale(0.98); }
-  .login-divider {
-    display: flex; align-items: center; gap: 12px;
-    color: var(--text3); font-size: 0.72rem;
-  }
-  .login-divider::before, .login-divider::after {
-    content: ''; flex: 1; height: 1px; background: var(--border);
-  }
-  .google-btn {
-    width: 100%; padding: 12px;
-    background: white; border: none; border-radius: var(--radius-sm);
-    color: #333; font-family: 'DM Sans', sans-serif;
-    font-size: 0.88rem; font-weight: 600; cursor: pointer;
-    display: flex; align-items: center; justify-content: center; gap: 10px;
-    transition: all 0.2s;
-  }
-  .google-btn:active { opacity: 0.85; transform: scale(0.98); }
-  .login-error {
-    background: rgba(232,93,138,0.1); border: 1px solid rgba(232,93,138,0.3);
-    border-radius: 8px; padding: 10px 12px;
-    font-size: 0.78rem; color: #f0a0c0; display: none;
-  }
-  .login-error.show { display: block; }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
-  /* --- CONTATOS DE CONFIANÇA --- */
-  .contact-card {
-    background: var(--card); border: 1px solid var(--border);
-    border-radius: var(--radius-sm); padding: 13px 15px; margin-bottom: 10px;
-    display: flex; align-items: center; gap: 12px;
-  }
-  .contact-avatar {
-    width: 42px; height: 42px; border-radius: 50%; flex-shrink: 0;
-    background: linear-gradient(135deg, var(--purple), var(--purple2));
-    display: flex; align-items: center; justify-content: center; font-size: 1.2rem;
-  }
-  .contact-info { flex: 1; min-width: 0; }
-  .contact-name { font-size: 0.88rem; font-weight: 600; color: var(--text); }
-  .contact-phone { font-size: 0.72rem; color: var(--text3); margin-top: 2px; }
-  .contact-rel { font-size: 0.68rem; color: var(--purple3); font-weight: 500; margin-top: 1px; }
-  .contact-actions { display: flex; gap: 6px; flex-shrink: 0; }
-  .contact-act-btn {
-    background: var(--card2); border: 1px solid var(--border);
-    border-radius: 8px; padding: 6px 9px; font-size: 0.78rem;
-    cursor: pointer; color: var(--text2); transition: all 0.2s;
-  }
-  .contact-act-btn:active { transform: scale(0.92); }
-  .contact-act-btn.del:active { color: #e85d8a; }
+/* ============================
+   SECTION BASE
+============================= */
+section { padding: 6rem 2rem; }
 
-  /* --- COLAR DE EMERGÊNCIA --- */
-  .necklace-widget {
-    background: linear-gradient(135deg, rgba(232,93,138,0.12), rgba(194,63,106,0.08));
-    border: 1px solid rgba(232,93,138,0.35); border-radius: var(--radius);
-    padding: 24px 20px; text-align: center; margin-bottom: 14px;
-  }
-  .necklace-icon { font-size: 3.2rem; margin-bottom: 8px; }
-  .necklace-title {
-    font-family: 'DM Serif Display', serif; font-size: 1.15rem;
-    color: var(--text); margin-bottom: 6px;
-  }
-  .necklace-desc { font-size: 0.78rem; color: var(--text2); line-height: 1.5; margin-bottom: 16px; }
-  .click-indicators { display: flex; gap: 10px; justify-content: center; margin-bottom: 16px; }
-  .click-dot {
-    width: 18px; height: 18px; border-radius: 50%;
-    background: var(--card2); border: 2px solid var(--border);
-    transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1);
-  }
-  .click-dot.active {
-    background: #e85d8a; border-color: #e85d8a;
-    box-shadow: 0 0 14px rgba(232,93,138,0.6); transform: scale(1.2);
-  }
-  .necklace-btn {
-    width: 78px; height: 78px; border-radius: 50%;
-    background: linear-gradient(135deg, #e85d8a, #c23f6a);
-    border: none; color: white; font-size: 1.9rem;
-    display: flex; align-items: center; justify-content: center;
-    cursor: pointer; margin: 0 auto;
-    box-shadow: 0 0 28px rgba(232,93,138,0.5);
-    transition: all 0.18s;
-  }
-  .necklace-btn:active { transform: scale(0.9); box-shadow: 0 0 44px rgba(232,93,138,0.8); }
-  .necklace-status { font-size: 0.76rem; color: var(--text3); margin-top: 12px; min-height: 20px; transition: color 0.3s; }
-  .necklace-status.triggered { color: #e85d8a; font-weight: 600; }
+.container { max-width: 1100px; margin: 0 auto; }
 
-  /* --- PSICÓLOGOS --- */
-  .psych-card {
-    background: var(--card); border: 1px solid var(--border);
-    border-radius: var(--radius); padding: 18px 20px; margin-bottom: 12px;
-  }
-  .psych-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
-  .psych-avatar {
-    width: 48px; height: 48px; border-radius: 50%; flex-shrink: 0;
-    background: linear-gradient(135deg, rgba(111,107,216,0.3), rgba(138,92,255,0.15));
-    border: 1px solid var(--border);
-    display: flex; align-items: center; justify-content: center; font-size: 1.5rem;
-  }
-  .psych-name { font-size: 0.9rem; font-weight: 600; color: var(--text); }
-  .psych-spec { font-size: 0.73rem; color: var(--purple3); margin-top: 2px; }
-  .psych-crp { font-size: 0.68rem; color: var(--text3); margin-top: 1px; }
-  .psych-actions { display: flex; gap: 8px; }
-  .psych-btn {
-    flex: 1; padding: 9px 10px;
-    background: var(--card2); border: 1px solid var(--border);
-    border-radius: 10px; color: var(--text2);
-    font-family: 'DM Sans', sans-serif; font-size: 0.76rem; font-weight: 500;
-    cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 5px;
-    transition: all 0.2s; text-decoration: none;
-  }
-  .psych-btn.primary { background: rgba(111,107,216,0.15); border-color: var(--purple); color: var(--purple3); }
-  .psych-btn:active { transform: scale(0.97); }
+.section-eyebrow {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--rosa-vibrante);
+  margin-bottom: 0.75rem;
+}
 
-  /* --- ADMIN PANEL --- */
-  .admin-stat-row {
-    background: var(--card); border: 1px solid var(--border);
-    border-radius: var(--radius-sm); padding: 13px 16px; margin-bottom: 8px;
-    display: flex; align-items: center; justify-content: space-between;
-  }
-  .admin-stat-label { font-size: 0.82rem; color: var(--text2); }
-  .admin-stat-value { font-size: 1.2rem; font-weight: 700; color: var(--purple3); }
-  .admin-user-row {
-    background: var(--card); border: 1px solid var(--border);
-    border-radius: var(--radius-sm); padding: 12px 14px; margin-bottom: 8px;
-  }
-  .admin-user-name { font-size: 0.85rem; font-weight: 600; color: var(--text); }
-  .admin-user-meta { font-size: 0.7rem; color: var(--text3); margin-top: 3px; }
-  .admin-row-flex { display: flex; align-items: center; justify-content: space-between; }
-  .admin-tag {
-    display: inline-flex; align-items: center; gap: 4px;
-    background: rgba(232,93,138,0.15); border: 1px solid rgba(232,93,138,0.3);
-    border-radius: 50px; padding: 2px 8px; font-size: 0.64rem; color: #f0a0c0;
-    margin-top: 5px;
-  }
-  .form-group { margin-bottom: 12px; }
-  .form-label {
-    display: block; font-size: 0.72rem; color: var(--text3); font-weight: 600;
-    letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 6px;
-  }
-  .form-input {
-    width: 100%; background: var(--card2); border: 1.5px solid var(--border);
-    border-radius: var(--radius-sm); color: var(--text);
-    font-family: 'DM Sans', sans-serif; font-size: 0.88rem; padding: 11px 14px;
-    outline: none; transition: border-color 0.2s;
-    -webkit-user-select: text; user-select: text;
-  }
-  .form-input:focus { border-color: var(--purple); }
-  .form-input::placeholder { color: var(--text3); }
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4.5vw, 3.2rem);
+  font-weight: 700;
+  color: var(--roxo-profundo);
+  line-height: 1.15;
+  margin-bottom: 1.25rem;
+}
 
-  /* --- SOS ALERT OVERLAY --- */
-  .sos-alert-overlay {
-    position: fixed; inset: 0; z-index: 999;
-    background: rgba(194,63,106,0.96); backdrop-filter: blur(20px);
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    padding: 32px 24px; text-align: center;
-    opacity: 0; pointer-events: none; transition: opacity 0.35s;
-  }
-  .sos-alert-overlay.open { opacity: 1; pointer-events: all; }
-  .sos-alert-icon { font-size: 5rem; margin-bottom: 14px; animation: pulse-icon 1s ease-in-out infinite; }
-  @keyframes pulse-icon { 0%,100%{transform:scale(1)} 50%{transform:scale(1.12)} }
-  .sos-alert-title { font-family: 'DM Serif Display', serif; font-size: 1.9rem; color: white; margin-bottom: 10px; }
-  .sos-alert-msg { font-size: 0.9rem; color: rgba(255,255,255,0.85); line-height: 1.6; margin-bottom: 28px; }
-  .sos-alert-cancel {
-    background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.4);
-    border-radius: 50px; color: white;
-    font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 600;
-    padding: 13px 28px; cursor: pointer;
-  }
+.section-title em {
+  font-style: italic;
+  color: var(--rosa-vibrante);
+}
 
+.section-lead {
+  font-family: var(--font-accent);
+  font-size: clamp(1.05rem, 1.8vw, 1.2rem);
+  font-style: italic;
+  color: var(--texto-medio);
+  max-width: 680px;
+  margin-bottom: 3rem;
+}
 
+/* Reveal on scroll */
+.reveal {
+  opacity: 0;
+  transform: translateY(36px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: none;
+}
 
-  /* ====================================================
-     CHAT AO VIVO — CSS
-  ===================================================== */
-  .chat-header-bar {
-    display: flex; align-items: center; justify-content: space-between;
-    margin-bottom: 12px;
-  }
-  .chat-online-badge {
-    display: flex; align-items: center; gap: 6px;
-    background: rgba(77,168,122,0.15); border: 1px solid rgba(77,168,122,0.3);
-    border-radius: 50px; padding: 4px 10px;
-    font-size: 0.68rem; color: #4da87a; font-weight: 600;
-  }
-  .chat-online-dot {
-    width: 7px; height: 7px; border-radius: 50%;
-    background: #4da87a;
-    animation: pulse-online 2s ease-in-out infinite;
-  }
-  @keyframes pulse-online { 0%,100%{opacity:1} 50%{opacity:0.4} }
+/* ============================
+   INTRODUÇÃO
+============================= */
+#introducao {
+  background: var(--branco-quente);
+  position: relative;
+  overflow: hidden;
+}
 
-  .chat-messages {
-    height: 340px;
-    overflow-y: auto;
-    background: rgba(0,0,0,0.15);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    padding: 12px 10px;
-    display: flex; flex-direction: column; gap: 8px;
-    margin-bottom: 10px;
-    scroll-behavior: smooth;
-    overscroll-behavior: contain;
-    -webkit-overflow-scrolling: touch;
-  }
-  .chat-messages::-webkit-scrollbar { width: 3px; }
-  .chat-messages::-webkit-scrollbar-thumb { background: rgba(111,107,216,0.4); border-radius: 3px; }
+#introducao::before {
+  content: '♀';
+  position: absolute;
+  right: -60px; top: 50%;
+  transform: translateY(-50%);
+  font-size: 400px;
+  color: var(--roxo-medio);
+  opacity: 0.04;
+  line-height: 1;
+  pointer-events: none;
+}
 
-  .chat-msg {
-    display: flex; flex-direction: column; max-width: 80%;
-  }
-  .chat-msg.mine { align-self: flex-end; align-items: flex-end; }
-  .chat-msg.theirs { align-self: flex-start; align-items: flex-start; }
+.intro-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
 
-  .chat-bubble {
-    padding: 9px 13px; border-radius: 16px;
-    font-size: 0.84rem; line-height: 1.45;
-    word-break: break-word;
-  }
-  .chat-msg.mine .chat-bubble {
-    background: linear-gradient(135deg, var(--purple), var(--purple2));
-    color: white; border-bottom-right-radius: 4px;
-  }
-  .chat-msg.theirs .chat-bubble {
-    background: var(--card2); color: var(--text);
-    border: 1px solid var(--border);
-    border-bottom-left-radius: 4px;
-  }
-  .chat-bubble.system {
-    background: rgba(111,107,216,0.08);
-    border: 1px solid rgba(111,107,216,0.15);
-    color: var(--text3); font-size: 0.75rem;
-    text-align: center; border-radius: 10px;
-    align-self: center; max-width: 90%;
-    font-style: italic;
-  }
+@media (max-width: 860px) { .intro-grid { grid-template-columns: 1fr; } }
 
-  .chat-meta {
-    font-size: 0.62rem; color: var(--text3);
-    margin-top: 3px; padding: 0 3px;
-  }
-  .chat-sender-name {
-    font-size: 0.68rem; color: var(--purple3);
-    font-weight: 600; margin-bottom: 3px; padding: 0 3px;
-  }
+.intro-card {
+  background: #fff;
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  border: 1px solid rgba(107,63,160,0.12);
+  box-shadow: 0 2px 16px rgba(61,26,92,0.06);
+  transition: transform var(--transition), box-shadow var(--transition);
+  position: relative;
+  overflow: hidden;
+}
 
-  .chat-input-row {
-    display: flex; gap: 8px; align-items: flex-end;
-  }
-  .chat-textarea {
-    flex: 1;
-    background: var(--card2); border: 1.5px solid var(--border);
-    border-radius: var(--radius-sm); color: var(--text);
-    font-family: 'DM Sans', sans-serif; font-size: 0.88rem;
-    padding: 10px 12px; resize: none; outline: none;
-    min-height: 44px; max-height: 100px;
-    transition: border-color 0.2s;
-    -webkit-user-select: text; user-select: text;
-    overscroll-behavior: contain;
-    line-height: 1.45;
-  }
-  .chat-textarea:focus { border-color: var(--purple); }
-  .chat-textarea::placeholder { color: var(--text3); }
+.intro-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--roxo-medio), var(--rosa-vibrante));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--transition);
+}
 
-  .chat-send-btn {
-    width: 44px; height: 44px; border-radius: 50%;
-    background: linear-gradient(135deg, var(--purple), var(--purple2));
-    border: none; color: white; font-size: 1.1rem;
-    display: flex; align-items: center; justify-content: center;
-    cursor: pointer; flex-shrink: 0;
-    transition: all 0.18s;
-  }
-  .chat-send-btn:active { transform: scale(0.9); }
+.intro-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(61,26,92,0.12); }
+.intro-card:hover::before { transform: scaleX(1); }
 
-  .chat-typing {
-    font-size: 0.7rem; color: var(--text3); min-height: 18px;
-    padding: 0 4px; font-style: italic;
-    transition: opacity 0.3s;
-  }
-  .chat-typing.hidden { opacity: 0; }
+.card-icon {
+  width: 48px; height: 48px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--roxo-medio), var(--rosa-vibrante));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  margin-bottom: 1.25rem;
+}
 
-  .chat-rules {
-    background: rgba(179,157,255,0.08); border: 1px solid rgba(179,157,255,0.15);
-    border-radius: 10px; padding: 10px 12px;
-    font-size: 0.72rem; color: var(--text3); line-height: 1.6;
-    margin-bottom: 12px;
-  }
+.intro-card h3 {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  color: var(--roxo-profundo);
+  margin-bottom: 0.75rem;
+}
 
-  .chat-empty {
-    display: flex; flex-direction: column; align-items: center;
-    justify-content: center; height: 100%;
-    color: var(--text3); font-size: 0.82rem; text-align: center; gap: 8px;
-  }
-  .chat-empty-icon { font-size: 2.4rem; opacity: 0.4; }
+.intro-card p {
+  font-size: 0.92rem;
+  color: var(--texto-medio);
+  line-height: 1.7;
+}
 
+/* ============================
+   PERFIL (Bertha / Maria / Carolina)
+============================= */
+.perfil-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.perfil-section:nth-of-type(odd) { background: var(--branco); }
+.perfil-section:nth-of-type(even) {
+  background: linear-gradient(135deg, #1A0438 0%, #3D1A5C 100%);
+  color: #fff;
+}
+.perfil-section:nth-of-type(even) .section-title { color: #fff; }
+.perfil-section:nth-of-type(even) .section-lead { color: rgba(255,255,255,0.7); }
+.perfil-section:nth-of-type(even) .section-eyebrow { color: var(--dourado-claro); }
+.perfil-section:nth-of-type(even) p { color: rgba(255,255,255,0.82); }
+
+.perfil-layout {
+  display: grid;
+  grid-template-columns: 1fr 1.6fr;
+  gap: 4rem;
+  align-items: start;
+}
+
+.perfil-layout.reverse { direction: rtl; }
+.perfil-layout.reverse > * { direction: ltr; }
+
+@media (max-width: 860px) {
+  .perfil-layout { grid-template-columns: 1fr; gap: 2.5rem; }
+  .perfil-layout.reverse { direction: ltr; }
+}
+
+/* Photo frame */
+.photo-frame {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  aspect-ratio: 4/5;
+  max-width: 360px;
+}
+
+.photo-frame img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: top;
+  display: block;
+  transition: transform 0.6s ease;
+  filter: grayscale(20%);
+}
+
+.photo-frame:hover img { transform: scale(1.05); filter: grayscale(0%); }
+
+.photo-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(61,26,92,0.7) 0%, transparent 55%);
+  pointer-events: none;
+}
+
+.photo-caption {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 1.5rem;
+  color: #fff;
+}
+
+.photo-caption h4 {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.photo-caption span {
+  font-size: 0.8rem;
+  opacity: 0.8;
+  letter-spacing: 0.05em;
+}
+
+/* Photo placeholder (for images that might fail) */
+.photo-placeholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, var(--roxo-medio), var(--rosa-vibrante));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+.photo-placeholder .p-icon { font-size: 5rem; opacity: 0.6; }
+.photo-placeholder .p-name { color: #fff; font-family: var(--font-display); font-size: 1.2rem; text-align: center; padding: 0 1rem; }
+
+/* Frame decoration */
+.photo-frame-deco {
+  position: absolute;
+  top: -12px; left: -12px;
+  width: 80px; height: 80px;
+  border-top: 3px solid var(--dourado);
+  border-left: 3px solid var(--dourado);
+  border-radius: 4px 0 0 0;
+  pointer-events: none;
+  z-index: 2;
+}
+.photo-frame-deco.br {
+  top: auto; left: auto;
+  bottom: -12px; right: -12px;
+  border-top: none; border-left: none;
+  border-bottom: 3px solid var(--dourado);
+  border-right: 3px solid var(--dourado);
+  border-radius: 0 0 4px 0;
+}
+
+.photo-wrapper { position: relative; }
+
+/* Info box */
+.perfil-content h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.vida-anos {
+  font-size: 0.85rem;
+  color: var(--rosa-claro);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 1.25rem;
+}
+
+.perfil-section:nth-of-type(even) .vida-anos { color: var(--dourado-claro); }
+
+.perfil-content p {
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+  line-height: 1.75;
+}
+
+/* Conquistas list */
+.conquistas {
+  margin: 1.5rem 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.conquistas li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  font-size: 0.9rem;
+}
+
+.conquistas li::before {
+  content: '✦';
+  color: var(--dourado);
+  font-size: 0.7rem;
+  margin-top: 0.35rem;
+  flex-shrink: 0;
+}
+
+/* Destaque card */
+.destaque-card {
+  margin-top: 2rem;
+  padding: 1.5rem 1.75rem;
+  border-radius: var(--radius);
+  border-left: 4px solid var(--dourado);
+  background: rgba(212,160,23,0.08);
+  backdrop-filter: blur(8px);
+}
+
+.destaque-card p {
+  font-family: var(--font-accent);
+  font-size: 1.05rem;
+  font-style: italic;
+  color: inherit;
+  margin: 0;
+  line-height: 1.6;
+}
+
+.perfil-section:nth-of-type(odd) .destaque-card {
+  background: rgba(107,63,160,0.06);
+  border-left-color: var(--roxo-medio);
+}
+.perfil-section:nth-of-type(odd) .destaque-card p { color: var(--roxo-profundo); }
+
+/* Tags */
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+}
+
+.tag {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.85rem;
+  border-radius: 99px;
+  border: 1px solid;
+}
+
+.tag-roxo { color: var(--roxo-medio); border-color: rgba(107,63,160,0.35); background: rgba(107,63,160,0.06); }
+.tag-rosa { color: var(--rosa-vibrante); border-color: rgba(194,24,91,0.3); background: rgba(194,24,91,0.05); }
+.tag-dourado { color: var(--dourado); border-color: rgba(212,160,23,0.4); background: rgba(212,160,23,0.08); }
+
+.perfil-section:nth-of-type(even) .tag-roxo { color: #d4aaff; border-color: rgba(212,170,255,0.3); background: rgba(212,170,255,0.08); }
+.perfil-section:nth-of-type(even) .tag-rosa { color: var(--rosa-claro); border-color: rgba(244,143,177,0.4); background: rgba(244,143,177,0.08); }
+.perfil-section:nth-of-type(even) .tag-dourado { color: var(--dourado-claro); border-color: rgba(245,208,96,0.4); background: rgba(245,208,96,0.08); }
+
+/* ============================
+   LINHA DO TEMPO
+============================= */
+#timeline {
+  background: linear-gradient(180deg, var(--cinza-leve) 0%, var(--branco) 100%);
+  position: relative;
+}
+
+.timeline-container {
+  position: relative;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.timeline-line {
+  position: absolute;
+  left: 50%;
+  top: 0; bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--roxo-medio), var(--rosa-vibrante));
+  transform: translateX(-50%);
+}
+
+.tl-items { list-style: none; display: flex; flex-direction: column; gap: 3rem; }
+
+.tl-item {
+  display: grid;
+  grid-template-columns: 1fr 60px 1fr;
+  align-items: center;
+  gap: 1rem;
+}
+
+.tl-item:nth-child(even) .tl-content { grid-column: 3; }
+.tl-item:nth-child(even) .tl-dot { grid-column: 2; }
+.tl-item:nth-child(even) .tl-spacer { grid-column: 1; }
+
+.tl-item:nth-child(odd) .tl-content { grid-column: 1; text-align: right; }
+.tl-item:nth-child(odd) .tl-dot { grid-column: 2; }
+.tl-item:nth-child(odd) .tl-spacer { grid-column: 3; }
+
+.tl-dot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+.tl-dot-inner {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--roxo-medio), var(--rosa-vibrante));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  box-shadow: 0 0 0 6px rgba(107,63,160,0.15);
+  transition: box-shadow var(--transition), transform var(--transition);
+}
+
+.tl-item:hover .tl-dot-inner {
+  transform: scale(1.1);
+  box-shadow: 0 0 0 10px rgba(107,63,160,0.12);
+}
+
+.tl-content {
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: var(--radius);
+  box-shadow: 0 2px 20px rgba(61,26,92,0.08);
+  border: 1px solid rgba(107,63,160,0.1);
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+
+.tl-item:hover .tl-content { transform: translateY(-3px); box-shadow: 0 8px 32px rgba(61,26,92,0.14); }
+
+.tl-ano {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--roxo-medio), var(--rosa-vibrante));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+  margin-bottom: 0.4rem;
+}
+
+.tl-titulo {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--roxo-profundo);
+  margin-bottom: 0.4rem;
+}
+
+.tl-desc {
+  font-size: 0.85rem;
+  color: var(--texto-medio);
+  line-height: 1.6;
+}
+
+@media (max-width: 680px) {
+  .timeline-line { left: 22px; }
+  .tl-items { gap: 2rem; }
+  .tl-item,
+  .tl-item:nth-child(even),
+  .tl-item:nth-child(odd) {
+    grid-template-columns: 44px 1fr;
+    grid-template-rows: auto;
+  }
+  .tl-dot,
+  .tl-item:nth-child(even) .tl-dot,
+  .tl-item:nth-child(odd) .tl-dot { grid-column: 1; grid-row: 1; }
+  .tl-content,
+  .tl-item:nth-child(even) .tl-content,
+  .tl-item:nth-child(odd) .tl-content { grid-column: 2; grid-row: 1; text-align: left; }
+  .tl-spacer { display: none; }
+}
+
+/* ============================
+   GALERIA
+============================= */
+#galeria {
+  background: var(--branco);
+  position: relative;
+  overflow: hidden;
+}
+
+.galeria-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+
+@media (max-width: 680px) { .galeria-grid { grid-template-columns: 1fr; gap: 1rem; } }
+
+.galeria-item {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  aspect-ratio: 3/4;
+  cursor: pointer;
+  box-shadow: 0 4px 24px rgba(61,26,92,0.12);
+  transition: box-shadow var(--transition);
+}
+
+.galeria-item:hover { box-shadow: 0 12px 48px rgba(61,26,92,0.22); }
+
+.galeria-item img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: top;
+  display: block;
+  transition: transform 0.6s cubic-bezier(0.4,0,0.2,1);
+  filter: grayscale(15%);
+}
+
+.galeria-item:hover img { transform: scale(1.08); filter: grayscale(0%); }
+
+.galeria-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(61,26,92,0.88) 0%, rgba(61,26,92,0.2) 50%, transparent 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1.75rem;
+  transition: background var(--transition);
+}
+
+.galeria-item:hover .galeria-overlay {
+  background: linear-gradient(to top, rgba(61,26,92,0.95) 0%, rgba(61,26,92,0.4) 50%, rgba(107,63,160,0.1) 100%);
+}
+
+.galeria-nome {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  color: #fff;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 0.3rem;
+}
+
+.galeria-legenda {
+  font-size: 0.8rem;
+  color: var(--rosa-claro);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* Galeria placeholder */
+.galeria-placeholder {
+  width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+}
+.galeria-placeholder-inner {
+  width: 100%; height: 100%;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+}
+
+/* ============================
+   VÍDEOS
+============================= */
+#videos {
+  background: linear-gradient(135deg, #1A0438, #3D1A5C, #6B3FA0);
+  position: relative;
+  overflow: hidden;
+}
+
+#videos .section-title { color: #fff; }
+#videos .section-eyebrow { color: var(--dourado-claro); }
+#videos .section-lead { color: rgba(255,255,255,0.7); }
+
+.videos-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+
+@media (max-width: 680px) { .videos-grid { grid-template-columns: 1fr; } }
+
+.video-card {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(12px);
+  box-shadow: var(--glass-shadow);
+  transition: transform var(--transition);
+}
+
+.video-card:hover { transform: translateY(-4px); }
+
+.video-thumb {
+  position: relative;
+  aspect-ratio: 16/9;
+  overflow: hidden;
+}
+
+.video-thumb iframe {
+  width: 100%; height: 100%;
+  display: block;
+  border: none;
+}
+
+.video-info { padding: 1.25rem; }
+
+.video-info h4 {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  color: #fff;
+  margin-bottom: 0.4rem;
+}
+
+.video-info p { font-size: 0.82rem; color: rgba(255,255,255,0.6); }
+
+/* ============================
+   CONCLUSÃO
+============================= */
+#conclusao {
+  background: var(--branco-quente);
+  position: relative;
+  overflow: hidden;
+}
+
+.conclusao-wrap {
+  max-width: 780px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.conclusao-quote {
+  font-family: var(--font-accent);
+  font-size: clamp(1.3rem, 2.5vw, 1.85rem);
+  font-style: italic;
+  color: var(--roxo-profundo);
+  line-height: 1.55;
+  margin: 2rem 0;
+  padding: 2rem;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, rgba(107,63,160,0.06), rgba(194,24,91,0.04));
+  border: 1px solid rgba(107,63,160,0.1);
+  position: relative;
+}
+
+.conclusao-quote::before {
+  content: '\201C';
+  position: absolute;
+  top: -20px; left: 20px;
+  font-size: 5rem;
+  color: var(--rosa-vibrante);
+  opacity: 0.25;
+  font-family: var(--font-display);
+  line-height: 1;
+}
+
+.conclusao-body p {
+  font-size: 0.97rem;
+  color: var(--texto-medio);
+  line-height: 1.8;
+  margin-bottom: 1rem;
+  text-align: left;
+}
+
+.conclusao-valores {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 2.5rem;
+}
+
+.valor-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, var(--roxo-medio), var(--rosa-vibrante));
+  color: #fff;
+  padding: 0.6rem 1.4rem;
+  border-radius: 99px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  box-shadow: 0 4px 16px rgba(107,63,160,0.3);
+}
+
+/* ============================
+   CRÉDITOS
+============================= */
+#creditos {
+  background: linear-gradient(135deg, #1A0438 0%, #3D1A5C 100%);
+  text-align: center;
+  padding: 5rem 2rem;
+}
+
+.creditos-card {
+  max-width: 680px;
+  margin: 0 auto;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(16px);
+  border-radius: var(--radius-lg);
+  padding: 3rem 2.5rem;
+  box-shadow: var(--glass-shadow);
+}
+
+.creditos-escola {
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--dourado-claro);
+  margin-bottom: 0.75rem;
+}
+
+.creditos-title {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+
+.creditos-divider {
+  width: 60px; height: 2px;
+  background: linear-gradient(90deg, var(--rosa-vibrante), var(--dourado));
+  margin: 1.5rem auto;
+  border-radius: 99px;
+}
+
+.creditos-meta {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 1.5rem;
+}
+
+.creditos-meta strong { color: var(--rosa-claro); font-weight: 600; }
+
+.creditos-lista {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-top: 1rem;
+}
+
+.creditos-lista li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  font-size: 0.92rem;
+  color: rgba(255,255,255,0.85);
+}
+
+.creditos-lista li::before {
+  content: '✦';
+  color: var(--dourado-claro);
+  font-size: 0.65rem;
+}
+
+/* ============================
+   RODAPÉ
+============================= */
+footer {
+  background: #0D0118;
+  padding: 2.5rem 2rem;
+  text-align: center;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+.footer-inner { max-width: 900px; margin: 0 auto; }
+
+.footer-brand {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  color: var(--dourado-claro);
+  margin-bottom: 0.5rem;
+}
+
+.footer-info {
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.4);
+  margin-bottom: 1.25rem;
+}
+
+.footer-icons {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.footer-icon {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  color: rgba(255,255,255,0.5);
+  text-decoration: none;
+  transition: background var(--transition), color var(--transition);
+  cursor: default;
+}
+
+.footer-icon:hover { background: rgba(107,63,160,0.3); color: var(--rosa-claro); }
+
+.footer-credits {
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.25);
+  letter-spacing: 0.04em;
+}
+
+/* ============================
+   BACK TO TOP
+============================= */
+#back-top {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--roxo-medio), var(--rosa-vibrante));
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+  box-shadow: 0 4px 20px rgba(107,63,160,0.4);
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity var(--transition), transform var(--transition);
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+#back-top.visible { opacity: 1; transform: none; }
+#back-top:hover { transform: translateY(-2px); }
+
+/* ============================
+   COUNTER STATS
+============================= */
+.stats-row {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 3rem 0 0;
+}
+
+.stat-item { text-align: center; }
+
+.stat-num {
+  font-family: var(--font-display);
+  font-size: 2.8rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--roxo-medio), var(--rosa-vibrante));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 0.78rem;
+  color: var(--texto-medio);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-top: 0.3rem;
+}
+
+/* ============================
+   MISC UTILS
+============================= */
+.text-center { text-align: center; }
+.mt-2 { margin-top: 2rem; }
+.gradient-text {
+  background: linear-gradient(135deg, var(--roxo-medio), var(--rosa-vibrante));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Decorative blob */
+.blob-deco {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+/* ============================
+   SELECTION
+============================= */
+::selection { background: rgba(194,24,91,0.25); }
 </style>
 </head>
 <body>
 
-<canvas id="canvas-bg"></canvas>
-
-<!-- ====================================================
-     TELA DE LOGIN / CADASTRO — NOVA FUNCIONALIDADE
-===================================================== -->
-<div id="login-screen">
-  <div style="text-align:center;margin-bottom:28px;">
-    <div class="login-logo">💜 S.O.S Eficiência</div>
-    <p class="login-tagline">Seu espaço seguro de apoio emocional.<br>Entre para começar sua jornada de cuidado.</p>
-  </div>
-  <div class="login-card">
-    <div class="login-tabs">
-      <button class="login-tab active" id="tab-entrar" onclick="switchLoginTab('entrar')">Entrar</button>
-      <button class="login-tab" id="tab-cadastrar" onclick="switchLoginTab('cadastrar')">Cadastrar</button>
-    </div>
-    <!-- FORM ENTRAR -->
-    <div id="login-form-entrar" class="login-form">
-      <div class="login-form-group">
-        <label class="login-label">Email</label>
-        <input type="email" class="login-input" id="login-email" placeholder="seu@email.com" autocomplete="email">
-      </div>
-      <div class="login-form-group">
-        <label class="login-label">Senha</label>
-        <input type="password" class="login-input" id="login-senha" placeholder="••••••••" autocomplete="current-password">
-      </div>
-      <div class="login-error" id="login-error-msg"></div>
-      <button class="login-btn" onclick="doLogin()">🔐 Entrar</button>
-      <div class="login-divider">ou</div>
-      <button class="google-btn" onclick="doGoogleLogin()">
-        <span>🌐</span> Continuar com Google
-      </button>
-    </div>
-    <!-- FORM CADASTRAR -->
-    <div id="login-form-cadastrar" class="login-form" style="display:none;">
-      <div class="login-form-group">
-        <label class="login-label">Nome completo</label>
-        <input type="text" class="login-input" id="reg-nome" placeholder="Seu nome" autocomplete="name">
-      </div>
-      <div class="login-form-group">
-        <label class="login-label">Email</label>
-        <input type="email" class="login-input" id="reg-email" placeholder="seu@email.com" autocomplete="email">
-      </div>
-      <div class="login-form-group">
-        <label class="login-label">Senha (mín. 6 caracteres)</label>
-        <input type="password" class="login-input" id="reg-senha" placeholder="••••••••" autocomplete="new-password">
-      </div>
-      <div class="login-error" id="reg-error-msg"></div>
-      <button class="login-btn" onclick="doRegistrar()">✨ Criar conta</button>
-      <div class="login-divider">ou</div>
-      <button class="google-btn" onclick="doGoogleLogin()">
-        <span>🌐</span> Cadastrar com Google
-      </button>
-    </div>
-  </div>
-</div>
-
-<div id="app">
-  <!-- TOP BAR -->
-  <div class="topbar">
-    <span class="topbar-logo">💜 S.O.S Eficiência</span>
-    <div style="display:flex;gap:8px;align-items:center;">
-      <div class="streak-badge" id="streak-badge">🔥 <span id="streak-count">0</span>d</div>
-      <button class="sos-btn" id="sos-btn" onclick="openSOS()">🆘 SOS</button>
-    </div>
-  </div>
-
-  <!-- PAGES -->
-  <div class="pages">
-
-    <!-- HOME -->
-    <div class="page active" id="page-home">
-      <div class="scroll-progress-bar" id="progress-home"></div>
-      <div class="page-inner">
-        <div class="crisis-banner" id="crisis-banner">
-          <span style="font-size:1.5rem">💜</span>
-          <p>Percebemos que você está passando por um momento difícil. Você não está sozinho(a).</p>
-        </div>
-
-        <div class="quote-card fade-up">
-          <p class="quote-text" id="quote-text">Carregando...</p>
-          <p class="quote-author" id="quote-author"></p>
-        </div>
-
-        <div class="card fade-up delay-1">
-          <div class="section-title">Como está hoje?</div>
-          <div class="emotion-grid" id="emotion-grid"></div>
-        </div>
-
-        <div class="card fade-up delay-2 week-chart-wrap">
-          <div class="section-title">Sua Semana</div>
-          <div class="week-chart-container">
-            <div class="week-chart-grid">
-              <div class="chart-grid-line"></div>
-              <div class="chart-grid-line"></div>
-              <div class="chart-grid-line"></div>
-            </div>
-            <div class="week-chart" id="week-chart"></div>
-          </div>
-          <svg class="mood-line-chart" id="mood-line-chart" viewBox="0 0 300 60" preserveAspectRatio="none"></svg>
-          <div id="chart-legend" style="display:flex;flex-wrap:wrap;gap:4px 8px;margin-top:10px;"></div>
-        </div>
-
-        <div class="fade-up delay-3">
-          <div class="section-title">Atalhos Rápidos</div>
-          <div class="quick-grid">
-            <button class="quick-btn" onclick="navTo('exercises')"><span class="qi">🌬️</span> Respiração</button>
-            <button class="quick-btn" onclick="navTo('diary')"><span class="qi">📖</span> Diário</button>
-            <button class="quick-btn" onclick="navTo('contacts')"><span class="qi">👥</span> Contatos</button>
-            <button class="quick-btn" onclick="openSOS()"><span class="qi">🆘</span> Ajuda</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- DIARY -->
-    <div class="page" id="page-diary">
-      <div class="scroll-progress-bar" id="progress-diary"></div>
-      <div class="page-inner">
-        <div class="section-title fade-up">Novo Registro</div>
-        <div class="card fade-up delay-1">
-          <textarea class="diary-textarea" id="diary-input" placeholder="Como foi seu dia? O que você está sentindo? Escreva livremente..."></textarea>
-          <div style="display:flex;justify-content:space-between;align-items:center;">
-            <div class="autosave-indicator" id="autosave-indicator">
-              <div class="dot"></div>
-              <span id="autosave-text">Rascunho não salvo</span>
-            </div>
-            <div class="char-counter" id="char-counter">0 caracteres</div>
-          </div>
-          <button class="save-btn" id="save-diary-btn" onclick="saveDiary()" disabled>💾 Salvar no Diário</button>
-        </div>
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;" class="fade-up delay-2">
-          <div class="section-title" style="margin-bottom:0">Registros Anteriores</div>
-          <span id="diary-count-badge" style="font-size:0.7rem;color:var(--text3)"></span>
-        </div>
-        <input type="text" class="diary-search" id="diary-search" placeholder="🔍 Buscar nos registros..." oninput="filterDiary(this.value)">
-        <div id="diary-list"></div>
-      </div>
-    </div>
-
-    <!-- EXERCISES -->
-    <div class="page" id="page-exercises">
-      <div class="scroll-progress-bar" id="progress-exercises"></div>
-      <div class="page-inner">
-        <div class="section-title fade-up">Exercícios por emoção</div>
-        <div class="exercise-tabs fade-up delay-1" id="exercise-tabs"></div>
-        <div id="exercise-list"></div>
-      </div>
-    </div>
-
-    <!-- CHAT AO VIVO — NOVA FUNCIONALIDADE -->
-    <div class="page" id="page-chat">
-      <div class="scroll-progress-bar" id="progress-chat"></div>
-      <div class="page-inner">
-
-        <div class="chat-header-bar fade-up">
-          <div class="section-title" style="margin-bottom:0;">💬 Chat ao Vivo</div>
-          <div class="chat-online-badge">
-            <div class="chat-online-dot"></div>
-            <span id="chat-online-count">1 online</span>
-          </div>
-        </div>
-
-        <div class="chat-rules fade-up delay-1">
-          💜 Este é um espaço seguro de apoio mútuo. Respeite todos os participantes. Em caso de emergência, use o botão SOS ou ligue 188 (CVV).
-        </div>
-
-        <div class="card fade-up delay-2" style="padding:14px;">
-          <div class="chat-messages" id="chat-messages">
-            <div class="chat-empty">
-              <div class="chat-empty-icon">💬</div>
-              <p>Seja o primeiro a enviar uma mensagem!</p>
-            </div>
-          </div>
-          <div class="chat-typing hidden" id="chat-typing">Alguém está digitando...</div>
-          <div class="chat-input-row">
-            <textarea
-              class="chat-textarea"
-              id="chat-input"
-              placeholder="Escreva sua mensagem..."
-              rows="1"
-              onkeydown="chatKeyDown(event)"
-              oninput="chatTyping()"
-            ></textarea>
-            <button class="chat-send-btn" onclick="sendChatMessage()" title="Enviar">➤</button>
-          </div>
-        </div>
-
-        <div class="info-badge fade-up delay-3" style="margin-top:4px;">
-          🔒 Mensagens ficam armazenadas localmente neste dispositivo.<br>Seu nome de exibição é seu nome de cadastro.
-        </div>
-
-      </div>
-    </div>
-
-    <!-- CONTATOS DE CONFIANÇA + COLAR + PSICÓLOGOS — NOVA FUNCIONALIDADE -->
-    <div class="page" id="page-contacts">
-      <div class="scroll-progress-bar" id="progress-contacts"></div>
-      <div class="page-inner">
-
-        <!-- Colar de Emergência -->
-        <div class="necklace-widget fade-up">
-          <div class="necklace-icon">📿</div>
-          <div class="necklace-title">Colar de Emergência</div>
-          <p class="necklace-desc">Pressione o botão abaixo 3 vezes rapidamente para simular o acionamento do colar e disparar o alerta para seus contatos.</p>
-          <div class="click-indicators">
-            <div class="click-dot" id="ndot0"></div>
-            <div class="click-dot" id="ndot1"></div>
-            <div class="click-dot" id="ndot2"></div>
-          </div>
-          <button class="necklace-btn" onclick="necklaceClick()">🆘</button>
-          <div class="necklace-status" id="necklace-status">Pressione 3 vezes seguidas para acionar</div>
-        </div>
-
-        <!-- Contatos de Confiança -->
-        <div class="card fade-up delay-1">
-          <div class="section-title">Contatos de Confiança</div>
-          <p style="font-size:0.78rem;color:var(--text3);margin-bottom:14px;line-height:1.5;">Pessoas que serão notificadas em caso de emergência emocional.</p>
-          <div id="contacts-list"></div>
-          <button class="save-btn" style="margin-top:8px;" onclick="openAddContact()">➕ Adicionar Contato</button>
-        </div>
-
-        <!-- Psicólogos -->
-        <div class="section-title fade-up delay-2">Psicólogos Confiáveis</div>
-        <p style="font-size:0.78rem;color:var(--text3);margin-bottom:12px;" class="fade-up delay-2">Profissionais de saúde mental disponíveis para apoio.</p>
-        <div id="psychologists-list" class="fade-up delay-3"></div>
-
-      </div>
-    </div>
-
-    <!-- LIBRARY -->
-    <div class="page" id="page-library">
-      <div class="scroll-progress-bar" id="progress-library"></div>
-      <div class="page-inner">
-        <div class="section-title fade-up">Biblioteca</div>
-        <p style="font-size:0.82rem;color:var(--text3);margin-bottom:16px;" class="fade-up delay-1">Artigos para te ajudar a entender e cuidar da sua saúde emocional.</p>
-        <div id="library-list" class="fade-up delay-2"></div>
-      </div>
-    </div>
-
-    <!-- PROFILE -->
-    <div class="page" id="page-profile">
-      <div class="scroll-progress-bar" id="progress-profile"></div>
-      <div class="page-inner">
-        <div style="text-align:center;margin-bottom:20px;" class="fade-up">
-          <div class="profile-avatar" id="profile-avatar-icon">🌸</div>
-          <div style="font-family:'DM Serif Display',serif;font-size:1.3rem;" id="profile-display-name">Meu Espaço</div>
-          <div style="font-size:0.8rem;color:var(--text3);margin-top:4px;" id="profile-display-email">S.O.S Eficiência — Cuide-se</div>
-        </div>
-
-        <div class="card fade-up delay-1" style="margin-bottom:14px;">
-          <div class="section-title">Meu Progresso</div>
-          <div class="stat-grid" id="stat-grid"></div>
-        </div>
-
-        <div class="card fade-up delay-2">
-          <div class="section-title">Conquistas</div>
-          <div id="achievements-list"></div>
-        </div>
-
-        <!-- PAINEL ADMIN — NOVA FUNCIONALIDADE -->
-        <div class="card fade-up delay-3" style="margin-top:14px;">
-          <div class="section-title">Administração</div>
-          <div id="admin-login-area">
-            <div class="form-group">
-              <label class="form-label">Senha de Administrador</label>
-              <input type="password" class="form-input" id="admin-pw-field" placeholder="Digite a senha admin">
-            </div>
-            <button class="save-btn" style="margin-top:0;" onclick="loginAdmin()">🔐 Acessar Painel Admin</button>
-          </div>
-          <div id="admin-panel" style="display:none;">
-            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
-              <span style="font-size:0.78rem;color:var(--purple3);font-weight:600;">✅ Painel Admin ativo</span>
-              <button style="background:none;border:none;color:var(--text3);font-size:0.75rem;cursor:pointer;" onclick="logoutAdmin()">Sair</button>
-            </div>
-            <div class="section-title" style="margin-bottom:8px;">👥 Usuários Cadastrados</div>
-            <div id="admin-users-list"></div>
-            <div class="section-title" style="margin-top:14px;margin-bottom:8px;">🔐 Administradores</div>
-            <div id="admin-admins-list"></div>
-            <button class="save-btn" style="margin-top:8px;" onclick="openAddAdmin()">➕ Adicionar Administrador</button>
-            <div class="section-title" style="margin-top:14px;margin-bottom:8px;">📊 Estatísticas Gerais</div>
-            <div id="admin-stats-list"></div>
-          </div>
-        </div>
-
-        <div class="fade-up delay-3" style="margin-top:0;">
-          <div class="section-title">Dados</div>
-          <button class="action-btn" onclick="exportData()">📤 Exportar meus dados (JSON)</button>
-          <button class="action-btn danger-btn" onclick="resetData()">🗑️ Resetar todos os dados</button>
-          <button class="action-btn danger-btn" onclick="doLogout()">🚪 Sair da conta</button>
-        </div>
-
-        <div class="info-badge fade-up delay-4" style="margin-top:14px;">
-          🔒 Seus dados ficam apenas no seu dispositivo.<br>Nunca compartilhamos suas informações.
-        </div>
-
-        <div class="card fade-up delay-4" style="margin-top:14px;">
-          <div class="section-title">Equipe de Desenvolvimento</div>
-          <div class="team-name"><div class="team-role">Orientador</div>Joe Garcia Lima de Morais</div>
-          <div class="team-name"><div class="team-role">Líder do Projeto &amp; Desenvolvedor</div>Ernandes da Conceição Neves</div>
-          <div class="team-name"><div class="team-role">Equipe de Apoio</div>Isnariane Pereira dos Santos</div>
-          <div class="team-name">Nilmar das Neves Santos</div>
-          <div class="team-name">Maria Iasmin Pires de Moraes</div>
-          <div class="team-name">Evandro da Silva Barros</div>
-        </div>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- BOTTOM NAV -->
-  <nav class="bottom-nav">
-    <button class="nav-btn active" data-page="home" onclick="navTo('home')">
-      <span class="nav-icon">🏠</span>Início
-    </button>
-    <button class="nav-btn" data-page="diary" onclick="navTo('diary')">
-      <span class="nav-icon">📖</span>Diário
-    </button>
-    <button class="nav-btn" data-page="exercises" onclick="navTo('exercises')">
-      <span class="nav-icon">🌬️</span>Exercícios
-    </button>
-    <button class="nav-btn" data-page="chat" onclick="navTo('chat')">
-      <span class="nav-icon">💬</span>Chat
-    </button>
-    <button class="nav-btn" data-page="contacts" onclick="navTo('contacts')">
-      <span class="nav-icon">👥</span>Contatos
-    </button>
-    <button class="nav-btn" data-page="library" onclick="navTo('library')">
-      <span class="nav-icon">📚</span>Biblioteca
-    </button>
-    <button class="nav-btn" data-page="profile" onclick="navTo('profile')">
-      <span class="nav-icon">👤</span>Eu
-    </button>
-  </nav>
-</div>
-
-<!-- ====================================================
-     FLOATING ACTION BUTTONS — NOVO
-     Grupo flutuante: ↑ subir | ↓ descer | ⟳ recarregar
-     Posicionado acima da bottom nav, canto inferior direito
-===================================================== -->
-<div class="fab-group" id="fab-group" aria-label="Navegação rápida">
-
-  <!-- ↑ Voltar ao topo (visível só quando há scroll) -->
-  <button
-    class="fab-btn fab-top"
-    id="fab-top"
-    onclick="scrollPageTo('top')"
-    data-tip="Ir ao topo"
-    aria-label="Voltar ao topo"
-    title="Ir ao topo"
-  >
-    <span class="fab-icon">↑</span>
+<!-- ========== NAV ========== -->
+<nav>
+  <div class="nav-logo">♀ Feministas Brasileiras</div>
+  <button class="hamburger" aria-label="Menu" onclick="document.querySelector('.nav-links').classList.toggle('open')">
+    <span></span><span></span><span></span>
   </button>
+  <ul class="nav-links">
+    <li><a href="#introducao">Introdução</a></li>
+    <li><a href="#bertha">Bertha Lutz</a></li>
+    <li><a href="#maria">Maria da Penha</a></li>
+    <li><a href="#carolina">Carolina M. de Jesus</a></li>
+    <li><a href="#timeline">Linha do Tempo</a></li>
+    <li><a href="#galeria">Galeria</a></li>
+    <li><a href="#videos">Vídeos</a></li>
+    <li><a href="#conclusao">Conclusão</a></li>
+    <li><a href="#creditos">Créditos</a></li>
+  </ul>
+</nav>
 
-  <!-- ↓ Ir ao final -->
-  <button
-    class="fab-btn fab-bottom"
-    id="fab-bottom"
-    onclick="scrollPageTo('bottom')"
-    data-tip="Ir ao final"
-    aria-label="Ir ao final da página"
-    title="Ir ao final"
-  >
-    <span class="fab-icon">↓</span>
-  </button>
-
-  <!-- ⟳ Recarregar manualmente -->
-  <button
-    class="fab-btn fab-reload"
-    id="fab-reload"
-    onclick="manualReload()"
-    data-tip="Recarregar"
-    aria-label="Recarregar página"
-    title="Recarregar"
-  >
-    <span class="fab-icon" id="fab-reload-icon">⟳</span>
-  </button>
-
-</div>
-
-<!-- SOS MODAL -->
-<div class="modal-overlay" id="sos-modal">
-  <div class="modal">
-    <div class="modal-handle"></div>
-    <div class="sos-modal-content">
-      <div class="sos-heart">💜</div>
-      <div class="sos-msg">Você não precisa enfrentar isso sozinho</div>
-      <p class="sos-sub">Estamos aqui com você. Se estiver em crise ou precisar de apoio imediato, o CVV está disponível 24 horas por dia, todos os dias.</p>
-      <a href="tel:188" style="text-decoration:none;display:block;">
-        <button class="call-btn">📞 Ligar para o CVV — 188</button>
-      </a>
-      <div id="sos-trusted-contacts" style="margin-bottom:10px;"></div>
-      <button class="modal-close" onclick="closeModal('sos-modal')">Fechar</button>
+<!-- ========== HERO ========== -->
+<section id="hero">
+  <div class="stars" id="stars-container"></div>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">✦ Trabalho Escolar · Turma 202 ✦</div>
+    <h1 class="hero-title">Feministas<br><span>Brasileiras</span></h1>
+    <p class="hero-subtitle">Mulheres que transformaram a história do Brasil por meio da luta por direitos, igualdade e justiça social.</p>
+    <div class="hero-cta">
+      <a href="#introducao" class="btn-primary">Explorar o Site</a>
+      <a href="#creditos" class="btn-secondary">Ver Créditos</a>
     </div>
   </div>
-</div>
+  <div class="hero-scroll-hint">Rolar</div>
+</section>
 
-<!-- EXERCISE MODAL -->
-<div class="modal-overlay" id="ex-modal">
-  <div class="modal">
-    <div class="modal-handle"></div>
-    <div id="ex-modal-inner"></div>
-  </div>
-</div>
-
-<!-- LIBRARY MODAL -->
-<div class="modal-overlay" id="lib-modal">
-  <div class="modal">
-    <div class="modal-handle"></div>
-    <div id="lib-modal-inner"></div>
-  </div>
-</div>
-
-<!-- DAY MODAL -->
-<div class="modal-overlay" id="day-modal">
-  <div class="modal">
-    <div class="modal-handle"></div>
-    <div id="day-modal-inner"></div>
-  </div>
-</div>
-
-<!-- ADD CONTACT MODAL — NOVA FUNCIONALIDADE -->
-<div class="modal-overlay" id="contact-modal">
-  <div class="modal">
-    <div class="modal-handle"></div>
-    <div class="modal-title" id="contact-modal-title">Adicionar Contato</div>
-    <div class="form-group">
-      <label class="form-label">Nome completo</label>
-      <input type="text" class="form-input" id="contact-input-nome" placeholder="Nome do contato">
+<!-- ========== INTRODUÇÃO ========== -->
+<section id="introducao">
+  <div class="container">
+    <div class="reveal">
+      <span class="section-eyebrow">Contexto Histórico</span>
+      <h2 class="section-title">O que é o <em>Feminismo</em>?</h2>
+      <p class="section-lead">Uma luta histórica e necessária pela igualdade de direitos entre mulheres e homens em todas as esferas da vida social, política e econômica.</p>
     </div>
-    <div class="form-group">
-      <label class="form-label">Telefone</label>
-      <input type="tel" class="form-input" id="contact-input-fone" placeholder="(00) 90000-0000">
+
+    <div class="stats-row reveal">
+      <div class="stat-item">
+        <div class="stat-num">1932</div>
+        <div class="stat-label">Voto feminino no Brasil</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">2006</div>
+        <div class="stat-label">Lei Maria da Penha</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">3</div>
+        <div class="stat-label">Heroínas estudadas</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">100+</div>
+        <div class="stat-label">Anos de luta</div>
+      </div>
     </div>
-    <div class="form-group">
-      <label class="form-label">Relação</label>
-      <input type="text" class="form-input" id="contact-input-rel" placeholder="Ex: Mãe, Amigo, Terapeuta...">
+
+    <div class="intro-grid">
+      <div class="intro-card reveal">
+        <div class="card-icon">⚖️</div>
+        <h3>O que é Feminismo</h3>
+        <p>O feminismo é um movimento social, político e filosófico que defende a igualdade de direitos entre mulheres e homens. Surgiu no século XIX como resposta às injustiças e desigualdades vividas pelas mulheres em todo o mundo.</p>
+      </div>
+      <div class="intro-card reveal">
+        <div class="card-icon">✊</div>
+        <h3>A Luta por Direitos</h3>
+        <p>As mulheres brasileiras lutaram pelo direito ao voto, à educação, ao trabalho digno e à proteção contra a violência. Cada conquista representou anos de resistência, sacrifício e organização coletiva.</p>
+      </div>
+      <div class="intro-card reveal">
+        <div class="card-icon">🌟</div>
+        <h3>Contribuições para o Brasil</h3>
+        <p>As feministas brasileiras transformaram leis, mentalidades e estruturas sociais. Sem elas, não teríamos o voto feminino, a Lei Maria da Penha nem a valorização da voz das mulheres negras e periféricas.</p>
+      </div>
     </div>
-    <div class="login-error" id="contact-error-msg"></div>
-    <button class="save-btn" onclick="saveContact()">💾 Salvar Contato</button>
-    <button class="modal-close" onclick="closeModal('contact-modal')">Cancelar</button>
   </div>
-</div>
+</section>
 
-<!-- ADD ADMIN MODAL — NOVA FUNCIONALIDADE -->
-<div class="modal-overlay" id="add-admin-modal">
-  <div class="modal">
-    <div class="modal-handle"></div>
-    <div class="modal-title">Adicionar Administrador</div>
-    <div class="form-group">
-      <label class="form-label">Email do administrador</label>
-      <input type="email" class="form-input" id="new-admin-email" placeholder="admin@email.com">
+<!-- ========== BERTHA LUTZ ========== -->
+<section id="bertha" class="perfil-section">
+  <div class="container">
+    <span class="section-eyebrow reveal">Perfil · Cientista e Ativista</span>
+    <div class="perfil-layout">
+      <div class="photo-wrapper reveal">
+        <div class="photo-frame">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Bertha_Lutz.jpg/400px-Bertha_Lutz.jpg"
+               alt="Bertha Lutz"
+               onerror="this.parentElement.innerHTML='<div class=\'photo-placeholder\'><div class=\'photo-placeholder-inner\' style=\'background:linear-gradient(135deg,#6B3FA0,#C2185B)\'><div class=\'p-icon\'>👩‍🔬</div><div class=\'p-name\'>Bertha Lutz</div></div></div>'">
+          <div class="photo-overlay"></div>
+          <div class="photo-caption">
+            <h4>Bertha Lutz</h4>
+            <span>1894 – 1976</span>
+          </div>
+        </div>
+        <div class="photo-frame-deco"></div>
+        <div class="photo-frame-deco br"></div>
+      </div>
+
+      <div class="perfil-content reveal">
+        <h2>Bertha Lutz</h2>
+        <div class="vida-anos">1894 – 1976 · Cientista · Política · Ativista</div>
+
+        <p>Bertha Maria Júlia Lutz nasceu em São Paulo e tornou-se uma das figuras mais importantes do movimento feminista brasileiro. Formada em Biologia pela Universidade de Paris, foi pioneira tanto na ciência quanto na política.</p>
+
+        <p>Retornando ao Brasil em 1918, fundou a <strong>Liga para Emancipação Intelectual da Mulher</strong> e batalhou incansavelmente pelo direito das mulheres ao voto, à educação e ao trabalho igualitário.</p>
+
+        <p>Em 1932, sua luta resultou na conquista histórica: o <strong>voto feminino no Brasil</strong>. Foi também a segunda mulher a ocupar um cargo na Câmara dos Deputados e participou da Conferência de São Francisco, que criou a ONU em 1945.</p>
+
+        <ul class="conquistas">
+          <li>Fundou a Federação Brasileira para o Progresso Feminino (1922)</li>
+          <li>Lutou pelo direito ao voto feminino, conquistado em 1932</li>
+          <li>Deputada federal e pioneira na política brasileira</li>
+          <li>Participou da criação da ONU (1945) como delegada</li>
+          <li>Bióloga de renome no Museu Nacional do Rio de Janeiro</li>
+        </ul>
+
+        <div class="destaque-card">
+          <p>"Bertha Lutz foi uma das principais responsáveis pela conquista do voto feminino no Brasil, mudando para sempre a história da democracia no país."</p>
+        </div>
+
+        <div class="tags">
+          <span class="tag tag-roxo">Sufragismo</span>
+          <span class="tag tag-rosa">Política</span>
+          <span class="tag tag-dourado">Ciência</span>
+          <span class="tag tag-roxo">Direitos da Mulher</span>
+        </div>
+      </div>
     </div>
-    <div class="form-group">
-      <label class="form-label">Senha de acesso</label>
-      <input type="password" class="form-input" id="new-admin-pw" placeholder="Mínimo 6 caracteres">
-    </div>
-    <div class="login-error" id="add-admin-error-msg"></div>
-    <button class="save-btn" onclick="saveNewAdmin()">💾 Salvar Administrador</button>
-    <button class="modal-close" onclick="closeModal('add-admin-modal')">Cancelar</button>
   </div>
-</div>
+</section>
 
-<!-- SOS ALERT OVERLAY — COLAR DE EMERGÊNCIA -->
-<div class="sos-alert-overlay" id="sos-alert-overlay">
-  <div class="sos-alert-icon">🆘</div>
-  <div class="sos-alert-title">Alerta Enviado!</div>
-  <div class="sos-alert-msg" id="sos-alert-msg">Seus contatos de confiança foram notificados sobre sua situação de emergência emocional.</div>
-  <button class="sos-alert-cancel" onclick="fecharSosAlert()">✅ Estou bem — Cancelar alerta</button>
-</div>
+<!-- ========== MARIA DA PENHA ========== -->
+<section id="maria" class="perfil-section">
+  <div class="container">
+    <span class="section-eyebrow reveal">Perfil · Sobrevivente e Ativista</span>
+    <div class="perfil-layout reverse">
+      <div class="photo-wrapper reveal">
+        <div class="photo-frame">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/Maria_da_Penha_Maia_Fernandes.jpg/400px-Maria_da_Penha_Maia_Fernandes.jpg"
+               alt="Maria da Penha"
+               onerror="this.parentElement.innerHTML='<div class=\'photo-placeholder\'><div class=\'photo-placeholder-inner\' style=\'background:linear-gradient(135deg,#C2185B,#3D1A5C)\'><div class=\'p-icon\'>⚖️</div><div class=\'p-name\'>Maria da Penha</div></div></div>'">
+          <div class="photo-overlay"></div>
+          <div class="photo-caption">
+            <h4>Maria da Penha</h4>
+            <span>1945 – Presente</span>
+          </div>
+        </div>
+        <div class="photo-frame-deco"></div>
+        <div class="photo-frame-deco br"></div>
+      </div>
 
-<!-- TOAST -->
-<div class="toast" id="toast"></div>
+      <div class="perfil-content reveal">
+        <h2>Maria da Penha</h2>
+        <div class="vida-anos">1945 – Presente · Biofarmacêutica · Ativista · Símbolo de Resistência</div>
 
+        <p>Maria da Penha Maia Fernandes nasceu em Fortaleza, Ceará. Biofarmacêutica e mãe de três filhas, viveu um relacionamento marcado por violência doméstica crescente e aterrorizante.</p>
+
+        <p>Em 1983, seu marido tentou assassiná-la com um tiro de espingarda enquanto ela dormia, deixando-a paraplégica. Em uma segunda tentativa, ele tentou eletrocutá-la. A impunidade do agressor durou anos, enquanto Maria da Penha lutava nos tribunais brasileiros e internacionais.</p>
+
+        <p>Em 1994, levou o caso à <strong>Comissão Interamericana de Direitos Humanos</strong>, que em 2001 responsabilizou o Brasil por negligência e cumplicidade. Isso pressionou o governo a criar, em <strong>7 de agosto de 2006</strong>, a Lei nº 11.340 — a <em>Lei Maria da Penha</em>.</p>
+
+        <ul class="conquistas">
+          <li>Sobreviveu a duas tentativas de assassinato pelo então marido</li>
+          <li>Lutou 19 anos para ver o agressor condenado</li>
+          <li>Inspirou a criação da Lei Maria da Penha (Lei 11.340/2006)</li>
+          <li>Símbolo mundial no combate à violência doméstica</li>
+          <li>Fundadora do Instituto Maria da Penha (IMP)</li>
+        </ul>
+
+        <div class="destaque-card">
+          <p>"A Lei Maria da Penha é considerada pela ONU uma das três mais avançadas legislações do mundo no combate à violência doméstica contra a mulher."</p>
+        </div>
+
+        <div class="tags">
+          <span class="tag tag-rosa">Violência Doméstica</span>
+          <span class="tag tag-dourado">Direitos Humanos</span>
+          <span class="tag tag-roxo">Resistência</span>
+          <span class="tag tag-rosa">Legislação</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== CAROLINA ========== -->
+<section id="carolina" class="perfil-section">
+  <div class="container">
+    <span class="section-eyebrow reveal">Perfil · Escritora e Visionária</span>
+    <div class="perfil-layout">
+      <div class="photo-wrapper reveal">
+        <div class="photo-frame">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Carolina_Maria_de_Jesus.jpg/400px-Carolina_Maria_de_Jesus.jpg"
+               alt="Carolina Maria de Jesus"
+               onerror="this.parentElement.innerHTML='<div class=\'photo-placeholder\'><div class=\'photo-placeholder-inner\' style=\'background:linear-gradient(135deg,#D4A017,#6B3FA0)\'><div class=\'p-icon\'>✍️</div><div class=\'p-name\'>Carolina Maria de Jesus</div></div></div>'">
+          <div class="photo-overlay"></div>
+          <div class="photo-caption">
+            <h4>Carolina Maria de Jesus</h4>
+            <span>1914 – 1977</span>
+          </div>
+        </div>
+        <div class="photo-frame-deco"></div>
+        <div class="photo-frame-deco br"></div>
+      </div>
+
+      <div class="perfil-content reveal">
+        <h2>Carolina Maria de Jesus</h2>
+        <div class="vida-anos">1914 – 1977 · Escritora · Catadora · Voz da Favela</div>
+
+        <p>Carolina Maria de Jesus nasceu em Sacramento, Minas Gerais, e viveu grande parte da vida na favela do Canindé, em São Paulo. Mãe solteira de três filhos, sobrevivia catando papel e restos de comida, enquanto escrevia em cadernos encontrados no lixo.</p>
+
+        <p>Seus diários revelavam com crueza e poesia a realidade da pobreza, da fome e da discriminação racial e social. Em 1960, o jornalista Audálio Dantas descobriu seus escritos e publicou <em><strong>Quarto de Despejo: Diário de uma Favelada</strong></em>.</p>
+
+        <p>O livro se tornou um fenômeno: vendeu mais de 10.000 cópias na primeira semana, foi traduzido para mais de 40 idiomas e transformou Carolina na primeira autora negra e periférica a ter projeção internacional na literatura brasileira.</p>
+
+        <ul class="conquistas">
+          <li>Publicou "Quarto de Despejo" (1960) — best-seller histórico</li>
+          <li>Primeira escritora negra brasileira a ter projeção internacional</li>
+          <li>Obra traduzida para mais de 40 idiomas</li>
+          <li>Voz pioneira da literatura periférica e negra no Brasil</li>
+          <li>Símbolo da intersecção entre feminismo, raça e classe social</li>
+        </ul>
+
+        <div class="destaque-card">
+          <p>"Carolina transformou suas experiências de dor, fome e exclusão em uma das obras mais importantes e honestas da literatura brasileira — e mundial."</p>
+        </div>
+
+        <div class="tags">
+          <span class="tag tag-dourado">Literatura</span>
+          <span class="tag tag-roxo">Racismo</span>
+          <span class="tag tag-rosa">Pobreza</span>
+          <span class="tag tag-dourado">Dignidade</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== LINHA DO TEMPO ========== -->
+<section id="timeline">
+  <div class="container">
+    <div class="text-center reveal">
+      <span class="section-eyebrow">Marcos Históricos</span>
+      <h2 class="section-title">Linha do <em>Tempo</em></h2>
+      <p class="section-lead" style="margin: 0 auto 4rem;">Os momentos que definiram a luta das mulheres brasileiras ao longo da história.</p>
+    </div>
+
+    <div class="timeline-container">
+      <div class="timeline-line"></div>
+      <ul class="tl-items">
+        <li class="tl-item reveal">
+          <div class="tl-content">
+            <div class="tl-ano">1922</div>
+            <div class="tl-titulo">Federação Brasileira pelo Progresso Feminino</div>
+            <div class="tl-desc">Bertha Lutz funda a FBPF, organização que liderou a luta pelo voto feminino e pelos direitos das mulheres no Brasil.</div>
+          </div>
+          <div class="tl-dot"><div class="tl-dot-inner">⭐</div></div>
+          <div class="tl-spacer"></div>
+        </li>
+        <li class="tl-item reveal">
+          <div class="tl-spacer"></div>
+          <div class="tl-dot"><div class="tl-dot-inner">🗳️</div></div>
+          <div class="tl-content">
+            <div class="tl-ano">1932</div>
+            <div class="tl-titulo">Voto Feminino no Brasil</div>
+            <div class="tl-desc">As mulheres brasileiras conquistam o direito ao voto através do Código Eleitoral. Uma vitória histórica liderada por Bertha Lutz e o movimento sufragista.</div>
+          </div>
+        </li>
+        <li class="tl-item reveal">
+          <div class="tl-content">
+            <div class="tl-ano">1945</div>
+            <div class="tl-titulo">Bertha Lutz na Criação da ONU</div>
+            <div class="tl-desc">Bertha participa da Conferência de São Francisco como delegada do Brasil, contribuindo para incluir a igualdade de gênero na Carta das Nações Unidas.</div>
+          </div>
+          <div class="tl-dot"><div class="tl-dot-inner">🌍</div></div>
+          <div class="tl-spacer"></div>
+        </li>
+        <li class="tl-item reveal">
+          <div class="tl-spacer"></div>
+          <div class="tl-dot"><div class="tl-dot-inner">📖</div></div>
+          <div class="tl-content">
+            <div class="tl-ano">1960</div>
+            <div class="tl-titulo">Publicação de "Quarto de Despejo"</div>
+            <div class="tl-desc">Carolina Maria de Jesus publica seu diário da favela, obra que se torna fenômeno literário nacional e internacional, dando voz à pobreza e à negritude.</div>
+          </div>
+        </li>
+        <li class="tl-item reveal">
+          <div class="tl-content">
+            <div class="tl-ano">1983</div>
+            <div class="tl-titulo">Atentado contra Maria da Penha</div>
+            <div class="tl-desc">Maria da Penha sobrevive a um tiro que a deixa paraplégica. Inicia uma longa batalha judicial que duraria 19 anos por justiça e proteção às vítimas de violência doméstica.</div>
+          </div>
+          <div class="tl-dot"><div class="tl-dot-inner">💪</div></div>
+          <div class="tl-spacer"></div>
+        </li>
+        <li class="tl-item reveal">
+          <div class="tl-spacer"></div>
+          <div class="tl-dot"><div class="tl-dot-inner">⚖️</div></div>
+          <div class="tl-content">
+            <div class="tl-ano">2006</div>
+            <div class="tl-titulo">Lei Maria da Penha</div>
+            <div class="tl-desc">Promulgação da Lei nº 11.340/2006, que cria mecanismos para coibir e prevenir a violência doméstica e familiar contra a mulher, sendo considerada uma das mais avançadas do mundo.</div>
+          </div>
+        </li>
+        <li class="tl-item reveal">
+          <div class="tl-content">
+            <div class="tl-ano">Hoje</div>
+            <div class="tl-titulo">A Luta Continua</div>
+            <div class="tl-desc">O feminismo brasileiro segue vivo, amplificado por novas gerações que lutam contra a desigualdade salarial, o feminicídio, o racismo e pela representatividade política das mulheres.</div>
+          </div>
+          <div class="tl-dot"><div class="tl-dot-inner">🌺</div></div>
+          <div class="tl-spacer"></div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ========== GALERIA ========== -->
+<section id="galeria">
+  <div class="container">
+    <div class="text-center reveal">
+      <span class="section-eyebrow">Galeria</span>
+      <h2 class="section-title">Rostos da <em>Resistência</em></h2>
+      <p class="section-lead" style="margin: 0 auto;">Mulheres que moldaram a história com coragem, inteligência e determinação.</p>
+    </div>
+
+    <div class="galeria-grid">
+      <!-- Bertha -->
+      <div class="galeria-item reveal">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Bertha_Lutz.jpg/600px-Bertha_Lutz.jpg"
+             alt="Bertha Lutz"
+             onerror="this.style.display='none'; this.parentElement.querySelector('.galeria-placeholder').style.display='flex'">
+        <div class="galeria-placeholder" style="display:none; background:linear-gradient(135deg,#6B3FA0,#C2185B); position:absolute; inset:0; align-items:center; justify-content:center; font-size:5rem;">👩‍🔬</div>
+        <div class="galeria-overlay">
+          <div class="galeria-nome">Bertha Lutz</div>
+          <div class="galeria-legenda">Cientista · Sufragista · 1894–1976</div>
+        </div>
+      </div>
+
+      <!-- Maria da Penha -->
+      <div class="galeria-item reveal" style="transition-delay:0.15s">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/Maria_da_Penha_Maia_Fernandes.jpg/600px-Maria_da_Penha_Maia_Fernandes.jpg"
+             alt="Maria da Penha"
+             onerror="this.style.display='none'; this.parentElement.querySelector('.galeria-placeholder').style.display='flex'">
+        <div class="galeria-placeholder" style="display:none; background:linear-gradient(135deg,#C2185B,#3D1A5C); position:absolute; inset:0; align-items:center; justify-content:center; font-size:5rem;">⚖️</div>
+        <div class="galeria-overlay">
+          <div class="galeria-nome">Maria da Penha</div>
+          <div class="galeria-legenda">Ativista · Sobrevivente · 1945–</div>
+        </div>
+      </div>
+
+      <!-- Carolina -->
+      <div class="galeria-item reveal" style="transition-delay:0.3s">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Carolina_Maria_de_Jesus.jpg/600px-Carolina_Maria_de_Jesus.jpg"
+             alt="Carolina Maria de Jesus"
+             onerror="this.style.display='none'; this.parentElement.querySelector('.galeria-placeholder').style.display='flex'">
+        <div class="galeria-placeholder" style="display:none; background:linear-gradient(135deg,#D4A017,#6B3FA0); position:absolute; inset:0; align-items:center; justify-content:center; font-size:5rem;">✍️</div>
+        <div class="galeria-overlay">
+          <div class="galeria-nome">Carolina M. de Jesus</div>
+          <div class="galeria-legenda">Escritora · Visionária · 1914–1977</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== VÍDEOS ========== -->
+<section id="videos">
+  <div class="container">
+    <div class="text-center reveal">
+      <span class="section-eyebrow">Vídeos Educativos</span>
+      <h2 class="section-title" style="color:#fff;">Aprenda <em style="color:var(--rosa-claro)">Mais</em></h2>
+      <p class="section-lead">Assista a vídeos educativos sobre as feministas brasileiras e a história da luta por igualdade no país.</p>
+    </div>
+
+    <div class="videos-grid">
+      <div class="video-card reveal">
+        <div class="video-thumb">
+          <iframe src="https://www.youtube.com/embed/xwFzj1i_gME"
+                  title="Bertha Lutz"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="video-info">
+          <h4>Bertha Lutz — A luta pelo voto feminino</h4>
+          <p>Conheça a trajetória da cientista que conquistou o direito ao voto para as mulheres brasileiras.</p>
+        </div>
+      </div>
+
+      <div class="video-card reveal" style="transition-delay:0.15s">
+        <div class="video-thumb">
+          <iframe src="https://www.youtube.com/embed/8Gg5UFSMBtQ"
+                  title="Lei Maria da Penha"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="video-info">
+          <h4>Lei Maria da Penha — A história por trás da lei</h4>
+          <p>A trajetória de Maria da Penha e o impacto da lei que protege milhões de mulheres brasileiras.</p>
+        </div>
+      </div>
+
+      <div class="video-card reveal" style="transition-delay:0.3s">
+        <div class="video-thumb">
+          <iframe src="https://www.youtube.com/embed/LNiqMGTMvDE"
+                  title="Carolina Maria de Jesus"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="video-info">
+          <h4>Carolina Maria de Jesus — Quarto de Despejo</h4>
+          <p>A história da escritora que transformou a miséria em literatura universal e imortalizou a voz da favela.</p>
+        </div>
+      </div>
+
+      <div class="video-card reveal" style="transition-delay:0.45s">
+        <div class="video-thumb">
+          <iframe src="https://www.youtube.com/embed/ANmFGMGv9pA"
+                  title="Feminismo no Brasil"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="video-info">
+          <h4>Feminismo Brasileiro — Uma visão geral</h4>
+          <p>A história do movimento feminista no Brasil: conquistas, desafios e perspectivas para o futuro.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== CONCLUSÃO ========== -->
+<section id="conclusao">
+  <div class="container">
+    <div class="conclusao-wrap">
+      <div class="reveal">
+        <span class="section-eyebrow">Reflexão Final</span>
+        <h2 class="section-title">O Legado que <em>Persiste</em></h2>
+      </div>
+
+      <div class="conclusao-quote reveal">
+        "Nenhuma das liberdades que usufruímos hoje vieram de graça. Elas foram conquistadas por mulheres que se recusaram a aceitar o silêncio como resposta."
+      </div>
+
+      <div class="conclusao-body reveal">
+        <p>As feministas brasileiras que estudamos neste trabalho representam muito mais do que três histórias individuais. Elas personificam décadas de resistência coletiva, de coragem diante da opressão e de visão de um país mais justo e igualitário.</p>
+
+        <p><strong>Bertha Lutz</strong> nos ensinou que a participação política é um direito, não um privilégio. Graças a ela, cada mulher que vota hoje exerce um poder que antes lhe era negado. <strong>Maria da Penha</strong> transformou sua dor pessoal em proteção coletiva, provando que a justiça pode e deve ser alcançada mesmo quando o caminho demora décadas.</p>
+
+        <p><strong>Carolina Maria de Jesus</strong> nos mostrou que vozes marginalizadas têm histórias que o mundo precisa ouvir — e que a escrita pode ser o instrumento mais poderoso de quem não tem nada além da verdade.</p>
+
+        <p>A luta por igualdade, respeito e justiça social não pertence ao passado. Ela vive em cada denúncia feita por uma vítima de violência, em cada menina que estuda acreditando que pode chegar onde quiser, em cada mulher que ocupa espaços que lhe foram negados por séculos. O feminismo brasileiro é feito de história, mas aponta sempre para o futuro.</p>
+      </div>
+
+      <div class="conclusao-valores reveal">
+        <span class="valor-pill">✨ Igualdade</span>
+        <span class="valor-pill">🤝 Respeito</span>
+        <span class="valor-pill">⚖️ Justiça Social</span>
+        <span class="valor-pill">📚 Educação</span>
+        <span class="valor-pill">💜 Sororidade</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== CRÉDITOS ========== -->
+<section id="creditos">
+  <div class="container">
+    <div class="creditos-card reveal">
+      <div class="creditos-escola">Trabalho Escolar · Turma 202</div>
+      <div class="creditos-title">Feministas Brasileiras</div>
+      <div class="creditos-divider"></div>
+      <div class="creditos-meta">
+        Orientação: <strong>Prof.ª Bruna Soares</strong>
+      </div>
+      <div class="creditos-meta" style="margin-bottom: 0.25rem; color: rgba(255,255,255,0.45); font-size:0.78rem; letter-spacing:0.1em; text-transform:uppercase;">Integrantes do Grupo</div>
+      <ul class="creditos-lista">
+        <li>Ernandes Da Conceição Neves</li>
+        <li>Ana Rafaely Pereira Lima</li>
+        <li>Paulo Sérgio Borges da Silva</li>
+        <li>Nilmar das Neves Santos</li>
+        <li>Evandro da Silva Barros</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ========== RODAPÉ ========== -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">♀ Feministas Brasileiras</div>
+    <div class="footer-info">Escola Estadual · Turma 202 · 2025</div>
+    <div class="footer-icons">
+      <span class="footer-icon" title="Educação">📚</span>
+      <span class="footer-icon" title="Igualdade">⚖️</span>
+      <span class="footer-icon" title="Feminismo">♀</span>
+      <span class="footer-icon" title="Brasil">🇧🇷</span>
+      <span class="footer-icon" title="Resistência">✊</span>
+    </div>
+    <div class="footer-credits">Trabalho produzido com fins educacionais · Turma 202 · Prof.ª Bruna Soares</div>
+  </div>
+</footer>
+
+<!-- Back to top -->
+<a href="#hero" id="back-top" title="Voltar ao topo">↑</a>
+
+<!-- ========== JAVASCRIPT ========== -->
 <script>
-// ====== DATA ======
-const QUOTES = [
-  { text: "Você é mais forte do que pensa e mais amado do que imagina.", author: "Autor desconhecido" },
-  { text: "Cada dia é uma nova oportunidade de cuidar de você mesmo.", author: "S.O.S Eficiência" },
-  { text: "A dor que sentes hoje se tornará a força que terás amanhã.", author: "Autor desconhecido" },
-  { text: "Cuide da sua mente como cuida do seu corpo.", author: "S.O.S Eficiência" },
-  { text: "Não existe caminhada sem tropeços. Levante-se e siga.", author: "Provérbio" },
-  { text: "Você merece paz. Você merece alegria. Você merece saúde.", author: "S.O.S Eficiência" },
-  { text: "Respirar fundo é o primeiro passo para recomeçar.", author: "S.O.S Eficiência" },
-  { text: "Pedir ajuda é um ato de coragem, não de fraqueza.", author: "Autor desconhecido" },
-  { text: "Mesmo no escuro, há sempre uma luz esperando por você.", author: "S.O.S Eficiência" },
-  { text: "O presente momento é o único lugar onde a vida acontece.", author: "Eckhart Tolle" },
-];
-
-const EMOTIONS = [
-  { id: "muito-mal", label: "Muito mal", emoji: "😞", color: "#c23f6a", score: 1 },
-  { id: "triste", label: "Triste", emoji: "😔", color: "#7b72d8", score: 2 },
-  { id: "neutro", label: "Neutro", emoji: "😐", color: "#7a72b0", score: 5 },
-  { id: "ansioso", label: "Ansioso", emoji: "😟", color: "#8a5cff", score: 2 },
-  { id: "com-raiva", label: "Com raiva", emoji: "😡", color: "#e85d4a", score: 2 },
-  { id: "cansado", label: "Cansado", emoji: "😴", color: "#6070c0", score: 3 },
-  { id: "bem", label: "Bem", emoji: "🙂", color: "#4da87a", score: 7 },
-  { id: "muito-bem", label: "Muito bem", emoji: "😄", color: "#27ae60", score: 9 },
-];
-
-const EXERCISES = {
-  ansioso: {
-    label: "😟 Ansiedade",
-    items: [
-      { id: "resp424", icon: "🫁", title: "Respiração 4-2-4", desc: "Técnica comprovada para reduzir ansiedade rapidamente. Inspire, segure e expire no ritmo certo.", type: "breathing", duration: 120 },
-      { id: "grounding", icon: "🌿", title: "Técnica 5-4-3-2-1", desc: "Traga sua mente ao presente reconhecendo 5 coisas que vê, 4 que toca, 3 que ouve, 2 que cheira, 1 que prova.", type: "guided", duration: 180, steps: ["Olhe ao redor e nomeie 5 coisas que você pode VER agora.", "Toque 4 objetos próximos e sinta suas texturas.", "Ouça atentamente. O que você ESCUTA ao redor?", "Identifique 2 cheiros que você percebe.", "Pense em 1 coisa que você pode SENTIR o gosto agora."] },
-      { id: "muscular", icon: "💪", title: "Relaxamento Muscular", desc: "Tensione e relaxe grupos musculares para liberar tensão acumulada no corpo.", type: "guided", duration: 120, steps: ["Feche os punhos com força por 5 segundos. Solte.", "Aperte os ombros em direção às orelhas. Solte.", "Contraia os músculos do abdômen. Solte.", "Aperte as coxas juntas. Solte.", "Aperte os pés no chão. Solte. Respire."] },
-    ]
-  },
-  triste: {
-    label: "😔 Tristeza",
-    items: [
-      { id: "gratidao", icon: "🙏", title: "Gratidão Guiada", desc: "Reconecte-se com coisas boas que muitas vezes passam despercebidas no dia a dia.", type: "guided", duration: 120, steps: ["Pense em 1 pessoa que te fez bem recentemente.", "Lembre de 1 momento feliz dos últimos dias.", "Agradeça por 1 coisa simples que você tem hoje.", "Escreva ou guarde esses pensamentos no coração."] },
-      { id: "meta", icon: "🎯", title: "Pequena Meta Diária", desc: "Estabeleça uma meta minúscula para hoje. Qualquer vitória conta.", type: "guided", duration: 90, steps: ["Pense em algo muito pequeno que você pode fazer hoje.", "Pode ser: beber água, dar uma volta, mandar mensagem para alguém.", "Comprometa-se com essa única ação.", "Quando fizer, celebre! Você conseguiu! 🎉"] },
-      { id: "alongamento", icon: "🧘", title: "Alongamento Leve", desc: "Movimento suave para despertar o corpo e liberar endorfinas naturais.", type: "guided", duration: 120, steps: ["De pé, estique os braços para cima. Respire.", "Gire o pescoço suavemente para cada lado.", "Estique os braços à frente, entrelace os dedos.", "Agache levemente e suba lentamente.", "Respire fundo 3 vezes. Sinta o seu corpo."] },
-    ]
-  },
-  "com-raiva": {
-    label: "😡 Raiva",
-    items: [
-      { id: "contagem", icon: "🔢", title: "Contagem Regressiva", desc: "Contar de 10 a 1 ativa o córtex pré-frontal e reduz a resposta emocional imediata.", type: "countdown", duration: 10 },
-      { id: "resp-raiva", icon: "🌬️", title: "Respiração Profunda", desc: "Respirações longas e lentas ativam o sistema nervoso parassimpático, acalmando o corpo.", type: "breathing", duration: 60 },
-      { id: "pausa", icon: "⏸️", title: "Pausa Emocional", desc: "Afaste-se da situação por alguns minutos. Isso não é fraqueza — é sabedoria.", type: "guided", duration: 120, steps: ["Afaste-se fisicamente da situação por 2 minutos.", "Encontre um lugar tranquilo se possível.", "Beba um copo d'água lentamente.", "Pergunte-se: isso ainda vai importar em 1 ano?", "Retorne à situação quando se sentir pronto."] },
-    ]
-  },
-  cansado: {
-    label: "😴 Cansaço",
-    items: [
-      { id: "pausa60", icon: "🧠", title: "Pausa Consciente 60s", desc: "Um minuto de descanso consciente pode restaurar mais energia do que horas de distração.", type: "countdown", duration: 60, label: "Feche os olhos. Respire. Descanse." },
-      { id: "ocular", icon: "👁️", title: "Exercício Ocular", desc: "Olhos cansados afetam todo o corpo. Este exercício alivia a tensão visual rapidamente.", type: "guided", duration: 90, steps: ["Palme os olhos: cubra com as palmas por 10s.", "Olhe para longe (mais de 6m) por 20 segundos.", "Gire os olhos lentamente no sentido horário.", "Gire no sentido anti-horário.", "Pisque 20 vezes rapidamente. Descanse."] },
-    ]
-  },
-  bem: {
-    label: "🙂 Positivo",
-    items: [
-      { id: "conquistas", icon: "🏆", title: "Registro de Conquistas", desc: "Anote tudo que você conquistou hoje, por menor que seja. Isso reforça hábitos positivos.", type: "guided", duration: 90, steps: ["O que você fez bem hoje?", "Que dificuldade você superou?", "De que forma você cuidou de si mesmo?", "Que pessoa você impactou positivamente?", "Registre no diário! Você está indo muito bem. 🌟"] },
-      { id: "reforco", icon: "✨", title: "Reforço Positivo", desc: "Celebre este momento bom. Momentos positivos merecem atenção e celebração.", type: "guided", duration: 60, steps: ["Respire fundo e sorria — mesmo que pequeno.", "Lembre que dias bons também fazem parte de você.", "Compartilhe sua energia com alguém que precisa.", "Guarde esta sensação. Ela é real e merece ser valorizada."] },
-    ]
-  },
-};
-
-const LIBRARY_ARTICLES = [
-  {
-    icon: "😟", title: "O que é ansiedade?",
-    sub: "Entenda os sintomas e como lidar",
-    content: `<p>A <strong>ansiedade</strong> é uma resposta natural do organismo a situações de estresse ou ameaça. Em doses moderadas, ela nos ajuda a ficar alertas e preparados. Porém, quando se torna excessiva, pode prejudicar a qualidade de vida.</p>
-    <br><p><strong>Sintomas comuns:</strong></p>
-    <p>• Preocupação excessiva e constante<br>• Tensão muscular<br>• Dificuldade para dormir<br>• Coração acelerado<br>• Sensação de que algo ruim vai acontecer</p>
-    <br><p><strong>O que ajuda:</strong></p>
-    <p>Exercícios de respiração, atividade física regular, reduzir cafeína, manter uma rotina de sono e buscar apoio profissional quando necessário.</p>`
-  },
-  {
-    icon: "😔", title: "Entendendo a depressão",
-    sub: "Mais do que tristeza — é uma doença",
-    content: `<p>A <strong>depressão</strong> é muito mais do que se sentir triste. É uma condição médica que afeta como você pensa, sente e realiza atividades do dia a dia. Ela não é fraqueza nem falta de vontade.</p>
-    <br><p><strong>Sinais importantes:</strong></p>
-    <p>• Tristeza persistente por mais de 2 semanas<br>• Perda de interesse em atividades prazerosas<br>• Alterações no sono e apetite<br>• Dificuldade de concentração<br>• Pensamentos negativos frequentes</p>
-    <br><p><strong>Lembre-se:</strong> depressão tem tratamento e você merece receber ajuda. Procure um médico ou psicólogo.</p>`
-  },
-  {
-    icon: "😡", title: "Como lidar com a raiva",
-    sub: "Técnicas para gerenciar emoções intensas",
-    content: `<p>A <strong>raiva</strong> é uma emoção humana válida. O problema não é sentir raiva, mas como expressamos ela. Quando não gerenciada, pode prejudicar relacionamentos e nossa saúde.</p>
-    <br><p><strong>Estratégias eficazes:</strong></p>
-    <p>• Faça uma pausa antes de reagir<br>• Respire fundo várias vezes<br>• Conte de 10 a 1 mentalmente<br>• Expresse o que sente com "eu" em vez de "você"<br>• Escreva o que está sentindo</p>
-    <br><p>A raiva controlada pode se tornar energia para mudanças positivas.</p>`
-  },
-  {
-    icon: "🌸", title: "Autocuidado emocional",
-    sub: "Pequenas ações com grande impacto",
-    content: `<p>O <strong>autocuidado</strong> não é egoísmo — é necessidade. Cuidar de si mesmo permite que você cuide melhor dos outros também.</p>
-    <br><p><strong>Práticas simples:</strong></p>
-    <p>• Durma de 7 a 9 horas por noite<br>• Hidrate-se bem durante o dia<br>• Mova-se por pelo menos 20 minutos<br>• Estabeleça limites saudáveis<br>• Reserve tempo para o que te faz feliz<br>• Desconecte-se das redes sociais regularmente</p>
-    <br><p>Pequenas ações diárias constroem uma base emocional sólida.</p>`
-  },
-  {
-    icon: "🩺", title: "Quando procurar ajuda profissional?",
-    sub: "Reconheça os sinais e não espere mais",
-    content: `<p>Muitas pessoas hesitam em buscar ajuda profissional. Mas existem sinais claros de que é hora de consultar um psicólogo ou psiquiatra:</p>
-    <br><p>• Sintomas persistem por mais de 2 semanas<br>• Dificuldade para realizar tarefas do cotidiano<br>• Pensamentos de se machucar ou machucar outros<br>• Uso de álcool ou substâncias para aliviar a dor<br>• Isolamento social progressivo<br>• Sensação de que "não tem jeito"</p>
-    <br><p><strong>Buscar ajuda é o ato mais corajoso que você pode fazer. Você merece cuidado profissional.</strong></p>
-    <br><p>📞 CVV: 188 (gratuito, 24h)</p>`
-  },
-];
-
-const ACHIEVEMENTS = [
-  { icon: "🌱", name: "Primeiro Passo", desc: "Registrou sua primeira emoção", key: "first_emotion" },
-  { icon: "📖", name: "Escriba", desc: "Fez 3 registros no diário", key: "diary_3" },
-  { icon: "🔥", name: "Semana Perfeita", desc: "7 dias consecutivos de check-in", key: "streak_7" },
-  { icon: "🌬️", name: "Respirador", desc: "Completou 5 exercícios de respiração", key: "breath_5" },
-  { icon: "💜", name: "Cuidador de Si", desc: "Usou o app por 3 dias seguidos", key: "streak_3" },
-  { icon: "🏆", name: "Campeão Emocional", desc: "Registrou 30 emoções", key: "emotion_30" },
-];
-
-// ====== STATE ======
-let currentPage = 'home';
-let currentExTab = 'ansioso';
-let breathTimer = null;
-let breathActive = false;
-let exTimerInterval = null;
-let autosaveTimer = null;
-let diaryDraft = '';
-
-// ====== STORAGE ======
-function getData(key, def) {
-  try { return JSON.parse(localStorage.getItem('sos_' + key)) ?? def; } catch { return def; }
-}
-function setData(key, val) {
-  try { localStorage.setItem('sos_' + key, JSON.stringify(val)); } catch {}
-}
-
-// ====== CANVAS PARTICLES ======
+// ---- Star particles ----
 (function() {
-  const canvas = document.getElementById('canvas-bg');
-  const ctx = canvas.getContext('2d');
-  let particles = [];
-  let W, H;
-
-  function resize() {
-    W = canvas.width = window.innerWidth;
-    H = canvas.height = window.innerHeight;
-  }
-
-  function createParticle() {
-    return {
-      x: Math.random() * W,
-      y: Math.random() * H,
-      r: Math.random() * 2.5 + 0.5,
-      dx: (Math.random() - 0.5) * 0.4,
-      dy: (Math.random() - 0.5) * 0.4,
-      opacity: Math.random() * 0.4 + 0.1,
-      pulse: Math.random() * Math.PI * 2,
-    };
-  }
-
-  function init() {
-    resize();
-    particles = Array.from({ length: 60 }, createParticle);
-  }
-
-  function draw() {
-    ctx.clearRect(0, 0, W, H);
-    const t = Date.now() / 1000;
-    particles.forEach(p => {
-      p.x += p.dx; p.y += p.dy;
-      if (p.x < -10) p.x = W + 10;
-      if (p.x > W + 10) p.x = -10;
-      if (p.y < -10) p.y = H + 10;
-      if (p.y > H + 10) p.y = -10;
-      const op = p.opacity * (0.7 + 0.3 * Math.sin(t + p.pulse));
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(111, 107, 216, ${op})`;
-      ctx.fill();
-    });
-    requestAnimationFrame(draw);
-  }
-
-  window.addEventListener('resize', resize);
-  init(); draw();
-})();
-
-// ====== SCROLL PROGRESS BARS ======
-function setupScrollProgress() {
-  const pages = ['home', 'diary', 'exercises', 'library', 'profile'];
-  pages.forEach(pageId => {
-    const page = document.getElementById('page-' + pageId);
-    const bar = document.getElementById('progress-' + pageId);
-    if (!page || !bar) return;
-
-    page.addEventListener('scroll', () => {
-      const scrollTop = page.scrollTop;
-      const scrollHeight = page.scrollHeight - page.clientHeight;
-      if (scrollHeight <= 0) { bar.style.width = '0%'; return; }
-      const pct = Math.min(100, (scrollTop / scrollHeight) * 100);
-      bar.style.width = pct + '%';
-
-      // Atualiza visibilidade do botão FAB ↑
-      updateFabTopVisibility(scrollTop);
-    });
-  });
-}
-
-// ====== PREVENT PULL-TO-REFRESH ======
-// Método 1: CSS overscroll-behavior (já aplicado no CSS acima)
-// Método 2: Bloqueio via touchmove no JS (compatibilidade máxima com Android WebView)
-(function preventPullToRefresh() {
-  let startY = 0;
-  let isDragging = false;
-
-  document.addEventListener('touchstart', function(e) {
-    startY = e.touches[0].clientY;
-    isDragging = true;
-  }, { passive: true });
-
-  document.addEventListener('touchmove', function(e) {
-    if (!isDragging) return;
-
-    const currentY = e.touches[0].clientY;
-    const deltaY = currentY - startY;
-
-    // Encontra o elemento com scroll ativo
-    const activePage = document.querySelector('.page.active');
-
-    // Se não há modal aberto e a página ativa está no topo, bloqueia pull-down
-    if (activePage) {
-      const atTop = activePage.scrollTop <= 0;
-      const atBottom = activePage.scrollTop >= (activePage.scrollHeight - activePage.clientHeight - 1);
-
-      // Bloqueia pull-to-refresh: quando no topo e puxando para baixo
-      if (atTop && deltaY > 0) {
-        // Previne o comportamento padrão somente se não for scroll interno
-        if (e.cancelable) e.preventDefault();
-        return;
-      }
-
-      // Opcional: bloqueia bounce no iOS quando no final
-      if (atBottom && deltaY < 0) {
-        // Deixa rolar normalmente (não bloqueia)
-      }
-    } else {
-      // Se nenhuma página ativa, bloqueia todo scroll vertical no body
-      if (e.cancelable) e.preventDefault();
-    }
-  }, { passive: false });
-
-  document.addEventListener('touchend', function() {
-    isDragging = false;
-  }, { passive: true });
-})();
-
-// ====== FAB — FLOATING ACTION BUTTONS ======
-
-function getActivePage() {
-  return document.querySelector('.page.active');
-}
-
-/** Scroll suave para topo ou fundo da página ativa */
-function scrollPageTo(direction) {
-  const page = getActivePage();
-  if (!page) return;
-
-  if (direction === 'top') {
-    page.scrollTo({ top: 0, behavior: 'smooth' });
-  } else if (direction === 'bottom') {
-    page.scrollTo({ top: page.scrollHeight, behavior: 'smooth' });
-  }
-}
-
-/** Recarregar manualmente com feedback visual */
-function manualReload() {
-  const btn = document.getElementById('fab-reload');
-  const icon = document.getElementById('fab-reload-icon');
-
-  // Feedback visual: gira o ícone
-  btn.classList.add('spinning');
-  if (icon) icon.style.display = 'inline-block';
-
-  showToast('🔄 Recarregando...');
-
-  // Aguarda a animação e recarrega
-  setTimeout(() => {
-    btn.classList.remove('spinning');
-    window.location.reload();
-  }, 500);
-}
-
-/** Mostra/esconde o botão ↑ baseado no scroll da página ativa */
-function updateFabTopVisibility(scrollTop) {
-  const fabTop = document.getElementById('fab-top');
-  if (!fabTop) return;
-
-  const threshold = 80; // px de scroll para o botão aparecer
-  if (scrollTop > threshold) {
-    fabTop.classList.add('visible');
-  } else {
-    fabTop.classList.remove('visible');
-  }
-}
-
-/** Oculta FABs quando um modal está aberto para não sobrepor */
-function updateFabVisibility() {
-  const fabGroup = document.getElementById('fab-group');
-  if (!fabGroup) return;
-  const anyModalOpen = document.querySelector('.modal-overlay.open');
-  fabGroup.style.opacity = anyModalOpen ? '0' : '';
-  fabGroup.style.pointerEvents = anyModalOpen ? 'none' : '';
-}
-
-// ====== NAVIGATION ======
-function navTo(page) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('page-' + page).classList.add('active');
-  document.querySelector(`[data-page="${page}"]`)?.classList.add('active');
-  currentPage = page;
-
-  // Reset scroll and progress bar for the new page
-  const pageEl = document.getElementById('page-' + page);
-  if (pageEl) pageEl.scrollTop = 0;
-  const bar = document.getElementById('progress-' + page);
-  if (bar) bar.style.width = '0%';
-
-  // Reset botão ↑ ao trocar de página (começa no topo)
-  updateFabTopVisibility(0);
-
-  if (page === 'home') renderHome();
-  if (page === 'diary') renderDiary();
-  if (page === 'exercises') renderExercises();
-  if (page === 'library') renderLibrary();
-  if (page === 'profile') renderProfile();
-}
-
-// ====== TOAST ======
-function showToast(msg, duration = 2500) {
-  const t = document.getElementById('toast');
-  t.textContent = msg; t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), duration);
-}
-
-// ====== MODALS ======
-function openModal(id) {
-  document.getElementById(id).classList.add('open');
-  updateFabVisibility();
-}
-
-function closeModal(id) {
-  document.getElementById(id).classList.remove('open');
-  if (id === 'ex-modal') stopBreathing();
-  updateFabVisibility();
-}
-
-document.querySelectorAll('.modal-overlay').forEach(overlay => {
-  overlay.addEventListener('click', function(e) {
-    if (e.target === this) closeModal(this.id);
-  });
-});
-
-function openSOS() { openModal('sos-modal'); }
-
-// ====== QUOTE ======
-function renderQuote() {
-  const today = getTodayKey();
-  const dateNum = parseInt(today.replace(/-/g, ''));
-  const idx = dateNum % QUOTES.length;
-  const q = QUOTES[idx];
-  document.getElementById('quote-text').textContent = q.text;
-  document.getElementById('quote-author').textContent = '— ' + q.author;
-}
-
-// ====== EMOTIONS ======
-function renderEmotions() {
-  const grid = document.getElementById('emotion-grid');
-  grid.innerHTML = '';
-  const today = getTodayKey();
-  const todayEmotion = getData('day_' + today, null);
-
-  EMOTIONS.forEach(em => {
-    const btn = document.createElement('button');
-    btn.className = 'emotion-btn' + (todayEmotion?.id === em.id ? ' selected' : '');
-    btn.innerHTML = `<span class="em">${em.emoji}</span>${em.label}`;
-    btn.onclick = () => selectEmotion(em);
-    grid.appendChild(btn);
-  });
-}
-
-function selectEmotion(em) {
-  const today = getTodayKey();
-  setData('day_' + today, { id: em.id, emoji: em.emoji, label: em.label, score: em.score, color: em.color, ts: Date.now() });
-
-  let history = getData('emotion_history', []);
-  history.push({ date: today, id: em.id, emoji: em.emoji, label: em.label, score: em.score, color: em.color, ts: Date.now() });
-  setData('emotion_history', history);
-
-  checkAchievement('first_emotion');
-  if (history.length >= 30) checkAchievement('emotion_30');
-
-  updateStreak();
-  renderEmotions();
-  renderWeekChart();
-  checkCrisis();
-  showToast(em.emoji + ' ' + em.label + ' registrado!');
-
-  const map = { 'ansioso': 'ansioso', 'muito-mal': 'triste', 'triste': 'triste', 'com-raiva': 'com-raiva', 'cansado': 'cansado' };
-  if (map[em.id]) {
-    setTimeout(() => {
-      showToast('💡 Exercícios recomendados para você!', 3000);
-      setTimeout(() => { navTo('exercises'); currentExTab = map[em.id]; renderExercises(); }, 1200);
-    }, 800);
-  }
-}
-
-function getTodayKey() {
-  const d = new Date();
-  return `${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`;
-}
-
-// ====== WEEK CHART ======
-function renderWeekChart() {
-  const chart = document.getElementById('week-chart');
-  chart.innerHTML = '';
-  const days = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
-  const today = getTodayKey();
-  const weekData = [];
-
-  for (let i = 6; i >= 0; i--) {
-    const d = new Date();
-    d.setDate(d.getDate() - i);
-    const key = `${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`;
-    const data = getData('day_' + key, null);
-    const dayName = days[d.getDay()];
-    const score = data ? data.score : 0;
-    const isToday = key === today;
-
-    const emColor = data ? (data.color || EMOTIONS.find(e => e.id === data.id)?.color || '#6f6bd8') : null;
-    weekData.push({ score, data, dayName, key, d, isToday, emColor });
-
-    const maxScore = 9;
-    const pct = score > 0 ? Math.max(10, (score / maxScore) * 100) : 6;
-
-    const wrap = document.createElement('div');
-    wrap.className = 'day-bar-wrap' + (isToday ? ' today-wrap' : '');
-    wrap.onclick = () => openDayModal(key, data, dayName, d);
-
-    const tooltip = document.createElement('div');
-    tooltip.className = 'chart-tooltip';
-    tooltip.textContent = data ? `${data.emoji} ${data.label}` : dayName;
-
-    const bar = document.createElement('div');
-    bar.className = 'day-bar';
-    if (data && emColor) {
-      bar.style.background = `linear-gradient(to top, ${emColor}bb, ${emColor})`;
-      bar.style.boxShadow = `0 0 14px ${emColor}55`;
-    }
-
-    bar.style.height = '0%';
-    bar.style.transition = 'none';
-    setTimeout(() => {
-      bar.style.transition = 'height 0.6s cubic-bezier(0.34,1.56,0.64,1)';
-      bar.style.height = pct + '%';
-    }, (6 - i) * 60);
-
-    const label = document.createElement('div');
-    label.className = 'day-label';
-    label.textContent = data ? data.emoji : dayName.charAt(0);
-
-    wrap.appendChild(tooltip);
-    wrap.appendChild(bar);
-    wrap.appendChild(label);
-    chart.appendChild(wrap);
-  }
-
-  renderMoodLine(weekData);
-
-  const legend = document.getElementById('chart-legend');
-  if (legend) {
-    const seen = new Set();
-    const legendItems = [];
-    weekData.forEach(d => {
-      if (d.data && d.emColor && !seen.has(d.data.id)) {
-        seen.add(d.data.id);
-        legendItems.push({ emoji: d.data.emoji, label: d.data.label, color: d.emColor });
-      }
-    });
-    legend.innerHTML = legendItems.map(item => `
-      <div style="display:flex;align-items:center;gap:4px;font-size:0.62rem;color:var(--text3);">
-        <div style="width:8px;height:8px;border-radius:50%;background:${item.color};flex-shrink:0;box-shadow:0 0 4px ${item.color}88"></div>
-        ${item.emoji} ${item.label}
-      </div>
-    `).join('');
-  }
-}
-
-function renderMoodLine(weekData) {
-  const svg = document.getElementById('mood-line-chart');
-  if (!svg) return;
-
-  const w = 300, h = 60;
-  const points = weekData.map((d, i) => ({
-    x: (i / (weekData.length - 1)) * (w - 20) + 10,
-    y: d.score > 0 ? h - 6 - ((d.score / 9) * (h - 16)) : null,
-    color: d.emColor || '#b39dff',
-    data: d.data,
-  }));
-
-  const allValid = points.filter(p => p.y !== null);
-  if (allValid.length < 2) { svg.innerHTML = ''; return; }
-
-  function catmullRom(pts) {
-    if (pts.length < 2) return '';
-    let d = `M ${pts[0].x},${pts[0].y}`;
-    for (let i = 0; i < pts.length - 1; i++) {
-      const p0 = pts[Math.max(0, i - 1)];
-      const p1 = pts[i];
-      const p2 = pts[i + 1];
-      const p3 = pts[Math.min(pts.length - 1, i + 2)];
-      const cp1x = p1.x + (p2.x - p0.x) / 6;
-      const cp1y = p1.y + (p2.y - p0.y) / 6;
-      const cp2x = p2.x - (p3.x - p1.x) / 6;
-      const cp2y = p2.y - (p3.y - p1.y) / 6;
-      d += ` C ${cp1x},${cp1y} ${cp2x},${cp2y} ${p2.x},${p2.y}`;
-    }
-    return d;
-  }
-
-  const pathD = catmullRom(allValid);
-  const areaD = pathD + ` L ${allValid[allValid.length-1].x},${h} L ${allValid[0].x},${h} Z`;
-
-  const gid = 'mg' + Date.now();
-  const lgid = 'lg' + Date.now();
-
-  const colorStops = allValid.map((p) => {
-    const pct = Math.round((p.x / w) * 100);
-    return `<stop offset="${pct}%" stop-color="${p.color}"/>`;
-  }).join('');
-
-  const areaStops = allValid.map((p) => {
-    const pct = Math.round((p.x / w) * 100);
-    return `<stop offset="${pct}%" stop-color="${p.color}44"/>`;
-  }).join('');
-
-  const dots = allValid.map(p => `
-    <circle cx="${p.x}" cy="${p.y}" r="4" fill="${p.color}" opacity="0.25"/>
-    <circle cx="${p.x}" cy="${p.y}" r="2.8" fill="${p.color}" opacity="1"/>
-  `).join('');
-
-  svg.innerHTML = `
-    <defs>
-      <linearGradient id="${gid}" x1="0" y1="0" x2="1" y2="0">${colorStops}</linearGradient>
-      <linearGradient id="${lgid}" x1="0" y1="0" x2="1" y2="0">${areaStops}</linearGradient>
-    </defs>
-    <path d="${areaD}" fill="url(#${lgid})" />
-    <path d="${pathD}" fill="none" stroke="url(#${gid})" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-    ${dots}
-  `;
-
-  const linePath = svg.querySelectorAll('path')[1];
-  if (linePath) {
-    const len = linePath.getTotalLength?.() || 300;
-    linePath.style.strokeDasharray = len;
-    linePath.style.strokeDashoffset = len;
-    linePath.style.transition = 'stroke-dashoffset 1.2s cubic-bezier(0.4,0,0.2,1) 0.4s';
-    requestAnimationFrame(() => { linePath.style.strokeDashoffset = '0'; });
-  }
-}
-
-function openDayModal(key, data, dayName, d) {
-  const inner = document.getElementById('day-modal-inner');
-  const dateStr = d.toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'long' });
-
-  const diaryEntries = getData('diary', []).filter(e => {
-    const eDate = new Date(e.ts);
-    const eKey = `${eDate.getFullYear()}-${eDate.getMonth()+1}-${eDate.getDate()}`;
-    return eKey === key;
-  });
-
-  inner.innerHTML = `
-    <div class="modal-title">${dateStr}</div>
-    ${data ? `
-      <div style="text-align:center;font-size:3rem;margin:12px 0">${data.emoji}</div>
-      <p style="text-align:center;font-size:1rem;color:var(--text2);margin-bottom:12px">${data.label}</p>
-      <div class="info-badge">Você registrou <strong>${data.label}</strong> neste dia.</div>
-    ` : `<p style="color:var(--text3);text-align:center;padding:20px 0">Nenhum registro de emoção neste dia.</p>`}
-    ${diaryEntries.length > 0 ? `
-      <div style="margin-top:16px;">
-        <div class="section-title" style="margin-bottom:10px">📖 Anotações do dia</div>
-        ${diaryEntries.map(e => `
-          <div style="background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:12px;margin-bottom:8px;">
-            <p style="font-size:0.82rem;color:var(--text2);line-height:1.6">${e.text.replace(/\n/g, '<br>')}</p>
-          </div>
-        `).join('')}
-      </div>
-    ` : ''}
-    <button class="modal-close" onclick="closeModal('day-modal')">Fechar</button>
-  `;
-  openModal('day-modal');
-}
-
-// ====== HOME ======
-function renderHome() {
-  renderQuote();
-  renderEmotions();
-  renderWeekChart();
-  checkCrisis();
-  updateStreakDisplay();
-}
-
-// ====== CRISIS CHECK ======
-function checkCrisis() {
-  const history = getData('emotion_history', []);
-  const recent = history.slice(-3);
-  const negIds = ['muito-mal', 'triste', 'ansioso', 'com-raiva'];
-  const allNeg = recent.length >= 3 && recent.every(e => negIds.includes(e.id));
-  const banner = document.getElementById('crisis-banner');
-  const sosBtn = document.getElementById('sos-btn');
-  if (allNeg) {
-    banner.classList.add('show');
-    sosBtn.classList.add('crisis');
-  } else {
-    banner.classList.remove('show');
-    sosBtn.classList.remove('crisis');
-  }
-}
-
-// ====== STREAK ======
-function updateStreak() {
-  let streak = getData('streak', { count: 0, lastDate: null });
-  const today = getTodayKey();
-  const yesterday = (() => { const d = new Date(); d.setDate(d.getDate()-1); return `${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`; })();
-
-  if (streak.lastDate === today) return;
-  if (streak.lastDate === yesterday) {
-    streak.count++;
-  } else if (streak.lastDate !== today) {
-    streak.count = 1;
-  }
-  streak.lastDate = today;
-  setData('streak', streak);
-
-  if (streak.count >= 3) checkAchievement('streak_3');
-  if (streak.count >= 7) checkAchievement('streak_7');
-  updateStreakDisplay();
-}
-
-function updateStreakDisplay() {
-  const streak = getData('streak', { count: 0 });
-  document.getElementById('streak-count').textContent = streak.count || 0;
-}
-
-// ====== ACHIEVEMENTS ======
-function checkAchievement(key) {
-  let unlocked = getData('achievements', []);
-  if (!unlocked.includes(key)) {
-    unlocked.push(key);
-    setData('achievements', unlocked);
-    const ach = ACHIEVEMENTS.find(a => a.key === key);
-    if (ach) showToast('🏆 Conquista: ' + ach.name + '!', 3000);
-  }
-}
-
-// ====== DIARY ======
-function renderDiary() {
-  const entries = getData('diary', []);
-  const searchEl = document.getElementById('diary-search');
-  const q = searchEl ? searchEl.value.trim() : '';
-  renderDiaryList(entries, q);
-
-  const draft = getData('diary_draft', '');
-  const input = document.getElementById('diary-input');
-  if (input && draft) {
-    input.value = draft;
-    updateCharCounter(draft.length);
-    updateSaveBtn(draft.length);
-    setAutosaveState('draft', '📝 Rascunho restaurado');
-  }
-
-  if (input) {
-    input.oninput = () => {
-      const text = input.value;
-      diaryDraft = text;
-      updateCharCounter(text.length);
-      updateSaveBtn(text.length);
-
-      clearTimeout(autosaveTimer);
-      setAutosaveState('saving', 'Salvando rascunho...');
-      autosaveTimer = setTimeout(() => {
-        setData('diary_draft', text);
-        setAutosaveState('saved', text.length > 0 ? '✓ Rascunho salvo' : '');
-      }, 800);
-    };
-  }
-}
-
-function updateCharCounter(len) {
-  const counter = document.getElementById('char-counter');
-  if (!counter) return;
-  counter.textContent = len > 0 ? `${len} caractere${len !== 1 ? 's' : ''}` : '0 caracteres';
-  counter.className = 'char-counter' + (len > 0 ? ' has-text' : '');
-}
-
-function updateSaveBtn(len) {
-  const btn = document.getElementById('save-diary-btn');
-  if (!btn) return;
-  btn.disabled = len === 0;
-}
-
-function setAutosaveState(state, text) {
-  const indicator = document.getElementById('autosave-indicator');
-  const textEl = document.getElementById('autosave-text');
-  if (!indicator || !textEl) return;
-  indicator.className = 'autosave-indicator ' + state;
-  textEl.textContent = text;
-}
-
-function renderDiaryList(entries, query = '') {
-  const list = document.getElementById('diary-list');
-  const badge = document.getElementById('diary-count-badge');
-
-  let filtered = entries;
-  if (query) {
-    filtered = entries.filter(e => e.text.toLowerCase().includes(query.toLowerCase()));
-  }
-
-  if (badge) badge.textContent = filtered.length > 0 ? `${filtered.length} registro${filtered.length !== 1 ? 's' : ''}` : '';
-
-  if (!filtered.length) {
-    list.innerHTML = `
-      <div class="diary-empty">
-        <div class="diary-empty-icon">${query ? '🔍' : '📖'}</div>
-        <p>${query ? 'Nenhum registro encontrado.' : 'Nenhum registro ainda.<br>Escreva algo sobre como está se sentindo.'}</p>
-      </div>`;
-    return;
-  }
-
-  const sorted = [...filtered].sort((a, b) => (b.ts || 0) - (a.ts || 0));
-
-  list.innerHTML = sorted.map((e, i) => {
-    const realIdx = entries.indexOf(e);
-    const isLong = e.text.length > 200;
-    return `
-    <div class="diary-entry" id="entry-${i}">
-      <div class="entry-meta">
-        <div>
-          <div class="entry-date">📅 ${e.date}</div>
-          ${e.emotion ? `<div class="entry-emotion">${e.emotion.emoji} ${e.emotion.label}</div>` : ''}
-        </div>
-        <div class="entry-actions">
-          <button class="entry-action delete" onclick="deleteDiary(${realIdx}, event)">🗑️</button>
-        </div>
-      </div>
-      <p class="entry-text ${isLong ? 'collapsed' : ''}" id="entry-text-${i}">${e.text.replace(/\n/g, '<br>')}</p>
-      ${isLong ? `<button class="expand-btn" id="expand-${i}" onclick="toggleExpand(${i})">Ver mais ↓</button>` : ''}
-    </div>`;
-  }).join('');
-}
-
-function toggleExpand(i) {
-  const textEl = document.getElementById('entry-text-' + i);
-  const btn = document.getElementById('expand-' + i);
-  if (!textEl || !btn) return;
-  const isCollapsed = textEl.classList.contains('collapsed');
-  textEl.classList.toggle('collapsed', !isCollapsed);
-  btn.textContent = isCollapsed ? 'Ver menos ↑' : 'Ver mais ↓';
-}
-
-function filterDiary(query) {
-  const entries = getData('diary', []);
-  renderDiaryList(entries, query);
-}
-
-function saveDiary() {
-  const input = document.getElementById('diary-input');
-  const text = input.value.trim();
-  if (!text) { showToast('Escreva algo antes de salvar 📝'); return; }
-
-  const entries = getData('diary', []);
-  const now = new Date();
-
-  const todayKey = getTodayKey();
-  const todayEmotion = getData('day_' + todayKey, null);
-
-  const entry = {
-    text,
-    date: now.toLocaleString('pt-BR'),
-    ts: Date.now(),
-    emotion: todayEmotion ? { emoji: todayEmotion.emoji, label: todayEmotion.label } : null
-  };
-
-  entries.push(entry);
-  setData('diary', entries);
-
-  setData('diary_draft', '');
-  input.value = '';
-  updateCharCounter(0);
-  updateSaveBtn(0);
-  setAutosaveState('', '');
-
-  renderDiaryList(entries, '');
-  showToast('✅ Registro salvo com sucesso!');
-
-  if (entries.length >= 3) checkAchievement('diary_3');
-}
-
-function deleteDiary(idx, event) {
-  event?.stopPropagation();
-  const entries = getData('diary', []);
-  if (!confirm('Excluir este registro?')) return;
-  entries.splice(idx, 1);
-  setData('diary', entries);
-  renderDiaryList(entries, '');
-  showToast('🗑️ Registro removido');
-}
-
-// ====== EXERCISES ======
-function renderExercises() {
-  const tabs = document.getElementById('exercise-tabs');
-  const list = document.getElementById('exercise-list');
-
-  tabs.innerHTML = Object.entries(EXERCISES).map(([key, val]) =>
-    `<button class="ex-tab ${currentExTab === key ? 'active' : ''}" onclick="setExTab('${key}')">${val.label}</button>`
-  ).join('');
-
-  const cat = EXERCISES[currentExTab];
-  list.innerHTML = cat.items.map(ex => `
-    <div class="exercise-card fade-up">
-      <div class="ex-header">
-        <span class="ex-title">${ex.title}</span>
-        <span class="ex-icon">${ex.icon}</span>
-      </div>
-      <p class="ex-desc">${ex.desc}</p>
-      <button class="ex-start-btn" onclick="openExercise('${ex.id}')">▶️ Começar</button>
-    </div>
-  `).join('');
-}
-
-function setExTab(key) {
-  currentExTab = key;
-  renderExercises();
-  const page = document.getElementById('page-exercises');
-  if (page) page.scrollTop = 0;
-  const bar = document.getElementById('progress-exercises');
-  if (bar) bar.style.width = '0%';
-  updateFabTopVisibility(0);
-}
-
-function openExercise(exId) {
-  const allEx = Object.values(EXERCISES).flatMap(c => c.items);
-  const ex = allEx.find(e => e.id === exId);
-  if (!ex) return;
-
-  const inner = document.getElementById('ex-modal-inner');
-
-  if (ex.type === 'breathing') { inner.innerHTML = buildBreathingUI(ex); openModal('ex-modal'); return; }
-  if (ex.type === 'countdown') { inner.innerHTML = buildCountdownUI(ex); openModal('ex-modal'); return; }
-  if (ex.type === 'guided') { inner.innerHTML = buildGuidedUI(ex); openModal('ex-modal'); return; }
-}
-
-// ====== BREATHING ======
-function buildBreathingUI(ex) {
-  return `
-    <div class="modal-title">${ex.icon} ${ex.title}</div>
-    <p class="modal-body" style="margin-bottom:16px">${ex.desc}</p>
-    <div class="breath-container">
-      <div class="breath-circle-wrap">
-        <div class="breath-ring" id="breath-ring"></div>
-        <div class="breath-core" id="breath-core">
-          <div class="breath-text-inner" id="breath-inner">Pronto</div>
-        </div>
-      </div>
-      <div class="breath-count" id="breath-count"></div>
-      <div class="breath-phase" id="breath-phase">Pressione Começar</div>
-      <div class="breath-controls">
-        <button class="ctrl-btn primary" id="breath-start-btn" onclick="startBreathing()">▶️ Começar</button>
-        <button class="ctrl-btn" onclick="stopBreathing()">⏹️ Parar</button>
-      </div>
-    </div>
-    <button class="modal-close" onclick="closeModal('ex-modal')">Fechar</button>
-  `;
-}
-
-function startBreathing() {
-  if (breathActive) return;
-  breathActive = true;
-  document.getElementById('breath-start-btn').disabled = true;
-
-  let bc = getData('breath_count', 0) + 1;
-  setData('breath_count', bc);
-  if (bc >= 5) checkAchievement('breath_5');
-
-  const phases = [
-    { text: 'Inspire', duration: 4000, anim: 'breathe-in' },
-    { text: 'Segure', duration: 2000, anim: 'breathe-hold' },
-    { text: 'Expire', duration: 4000, anim: 'breathe-out' },
-  ];
-
-  let phaseIdx = 0;
-  let countdown = 0;
-  let countInterval;
-
-  function runPhase() {
-    if (!breathActive) return;
-    const phase = phases[phaseIdx % phases.length];
-    const core = document.getElementById('breath-core');
-    const phaseEl = document.getElementById('breath-phase');
-    const countEl = document.getElementById('breath-count');
-    const innerEl = document.getElementById('breath-inner');
-
-    if (!core) { breathActive = false; return; }
-
-    phaseEl.textContent = phase.text;
-    innerEl.textContent = phase.text;
-    core.style.animation = `${phase.anim} ${phase.duration}ms ease-in-out both`;
-
-    clearInterval(countInterval);
-    countdown = phase.duration / 1000;
-    countEl.textContent = countdown;
-
-    countInterval = setInterval(() => {
-      countdown--;
-      if (countEl) countEl.textContent = countdown > 0 ? countdown : '';
-    }, 1000);
-
-    phaseIdx++;
-    breathTimer = setTimeout(runPhase, phase.duration);
-  }
-
-  runPhase();
-}
-
-function stopBreathing() {
-  breathActive = false;
-  clearTimeout(breathTimer);
-  const core = document.getElementById('breath-core');
-  const phaseEl = document.getElementById('breath-phase');
-  const countEl = document.getElementById('breath-count');
-  const startBtn = document.getElementById('breath-start-btn');
-  if (core) core.style.animation = 'none';
-  if (phaseEl) phaseEl.textContent = 'Pausado';
-  if (countEl) countEl.textContent = '';
-  if (startBtn) startBtn.disabled = false;
-}
-
-// ====== COUNTDOWN ======
-let countdownInterval = null;
-
-function buildCountdownUI(ex) {
-  return `
-    <div class="modal-title">${ex.icon} ${ex.title}</div>
-    <p class="modal-body" style="margin-bottom:16px">${ex.desc}</p>
-    <div class="ex-modal-timer">
-      <div class="ex-timer-display" id="ex-timer">${ex.duration}</div>
-      <div class="ex-timer-label">${ex.label || 'segundos'}</div>
-      <div class="breath-controls" style="margin-top:20px;">
-        <button class="ctrl-btn primary" onclick="startCountdown(${ex.duration})">▶️ Começar</button>
-        <button class="ctrl-btn" onclick="stopCountdown(${ex.duration})">↺ Reiniciar</button>
-      </div>
-    </div>
-    <button class="modal-close" onclick="closeModal('ex-modal')">Fechar</button>
-  `;
-}
-
-function startCountdown(total) {
-  clearInterval(countdownInterval);
-  let t = total;
-  const el = document.getElementById('ex-timer');
-  if (el) el.textContent = t;
-
-  countdownInterval = setInterval(() => {
-    t--;
-    const el2 = document.getElementById('ex-timer');
-    if (el2) el2.textContent = t;
-    if (t <= 0) {
-      clearInterval(countdownInterval);
-      if (el2) el2.textContent = '✅';
-      showToast('🎉 Exercício concluído!');
-    }
-  }, 1000);
-}
-
-function stopCountdown(total) {
-  clearInterval(countdownInterval);
-  const el = document.getElementById('ex-timer');
-  if (el) el.textContent = total;
-}
-
-// ====== GUIDED ======
-function buildGuidedUI(ex) {
-  const steps = ex.steps || [];
-  return `
-    <div class="modal-title">${ex.icon} ${ex.title}</div>
-    <p class="modal-body" style="margin-bottom:16px">${ex.desc}</p>
-    <div id="guided-steps">
-      ${steps.map((step, i) => `
-        <div style="display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--border)">
-          <div style="width:24px;height:24px;border-radius:50%;background:var(--purple);display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:700;flex-shrink:0">${i+1}</div>
-          <p style="font-size:0.85rem;color:var(--text2);line-height:1.6">${step}</p>
-        </div>
-      `).join('')}
-    </div>
-    <button class="ctrl-btn primary" style="width:100%;margin-top:16px" onclick="showToast('🎉 Exercício concluído!')">✅ Concluído!</button>
-    <button class="modal-close" onclick="closeModal('ex-modal')">Fechar</button>
-  `;
-}
-
-// ====== LIBRARY ======
-function renderLibrary() {
-  const list = document.getElementById('library-list');
-  list.innerHTML = LIBRARY_ARTICLES.map((art, i) => `
-    <div class="lib-card" onclick="openArticle(${i})">
-      <div class="lib-info">
-        <span class="lib-icon">${art.icon}</span>
-        <div>
-          <div class="lib-title">${art.title}</div>
-          <div class="lib-sub">${art.sub}</div>
-        </div>
-      </div>
-      <span class="lib-arrow">›</span>
-    </div>
-  `).join('');
-}
-
-function openArticle(idx) {
-  const art = LIBRARY_ARTICLES[idx];
-  document.getElementById('lib-modal-inner').innerHTML = `
-    <div class="modal-title">${art.icon} ${art.title}</div>
-    <div class="modal-body">${art.content}</div>
-    <button class="modal-close" onclick="closeModal('lib-modal')">Fechar</button>
-  `;
-  openModal('lib-modal');
-}
-
-// ====== PROFILE ======
-function renderProfile() {
-  const history = getData('emotion_history', []);
-  const diary = getData('diary', []);
-  const streak = getData('streak', { count: 0 });
-
-  document.getElementById('stat-grid').innerHTML = `
-    <div class="stat-card">
-      <div class="stat-value">${history.length}</div>
-      <div class="stat-label">Check-ins</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-value">${streak.count || 0}</div>
-      <div class="stat-label">Dias seguidos</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-value">${diary.length}</div>
-      <div class="stat-label">Diário</div>
-    </div>
-  `;
-
-  const unlocked = getData('achievements', []);
-  document.getElementById('achievements-list').innerHTML = ACHIEVEMENTS.map(a => `
-    <div class="achievement-row">
-      <span class="ach-icon">${a.icon}</span>
-      <div class="ach-info">
-        <div class="ach-name" style="${!unlocked.includes(a.key) ? 'color:var(--text3)' : ''}">${a.name}</div>
-        <div class="ach-desc">${a.desc}</div>
-      </div>
-      <div class="ach-badge ${unlocked.includes(a.key) ? 'unlocked' : ''}">${unlocked.includes(a.key) ? '✓' : '🔒'}</div>
-    </div>
-  `).join('');
-}
-
-function exportData() {
-  const data = {
-    exported: new Date().toISOString(),
-    emotion_history: getData('emotion_history', []),
-    diary: getData('diary', []),
-    streak: getData('streak', {}),
-    achievements: getData('achievements', []),
-    breath_count: getData('breath_count', 0),
-  };
-  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url; a.download = 'sos-eficiencia-dados.json';
-  a.click(); URL.revokeObjectURL(url);
-  showToast('📤 Dados exportados!');
-}
-
-function resetData() {
-  if (!confirm('Tem certeza? Todos os seus dados serão apagados permanentemente.')) return;
-  ['emotion_history','diary','streak','achievements','breath_count','diary_draft'].forEach(k => {
-    localStorage.removeItem('sos_' + k);
-  });
-  Object.keys(localStorage).filter(k => k.startsWith('sos_day_')).forEach(k => localStorage.removeItem(k));
-  showToast('🗑️ Dados resetados');
-  renderProfile();
-}
-
-// ====== INIT ======
-function init() {
-  setupScrollProgress();
-  updateStreak();
-  renderHome();
-  // Inicializa estado do botão ↑ (começa escondido)
-  updateFabTopVisibility(0);
-}
-
-init();
-
-// ====================================================
-// NOVAS FUNCIONALIDADES — JAVASCRIPT ADICIONAL
-// ====================================================
-
-// ---------- DADOS PADRÃO ----------
-const DEFAULT_PSYCHOLOGISTS = [
-  { id:'p1', nome:'Dr. Sávio Soares', spec:'Terapia Cognitivo-Comportamental', fone:'8688248483', email:'ana.paula@email.com', avatar:'👨‍⚕️' },
-  { id:'p2', nome:'Dr. Marcos Oliveira', spec:'Psicanálise e Ansiedade', fone:'999999999', email:'marcos.oliveira@email.com', avatar:'👨‍⚕️' },
-  { id:'p3', nome:'Dra. Fernanda Lima', spec:'Saúde Mental Infanto-Juvenil', fone:'999999999', email:'fernanda.lima@email.com', avatar:'👩‍⚕️' },
-  { id:'p4', nome:'Dr. Ricardo Alves', spec:'Depressão e Transtornos do Humor', fone:'999999999', email:'ricardo.alves@email.com', avatar:'👨‍⚕️' },
-];
-
-const DEFAULT_ADMIN_PW = '9784512';
-let isAdminLoggedIn = false;
-let necklaceClicks = 0;
-let necklaceResetTimer = null;
-let editingContactIdx = null;
-
-// ---------- AUTH / USUÁRIOS ----------
-function getUsers() { return getData('users', []); }
-function setUsers(u) { setData('users', u); }
-function getAdmins() {
-  const a = getData('admins', null);  
-  if (!a) { const d = [{ email:'admin@sos.com', pw: DEFAULT_ADMIN_PW }]; setData('admins', d); return d; }
-  return a;
-}
-function setAdmins(a) { setData('admins', a); }
-function getCurrentUser() { return getData('current_user', null); }
-
-function switchLoginTab(tab) {
-  document.getElementById('tab-entrar').classList.toggle('active', tab === 'entrar');
-  document.getElementById('tab-cadastrar').classList.toggle('active', tab === 'cadastrar');
-  document.getElementById('login-form-entrar').style.display = tab === 'entrar' ? 'flex' : 'none';
-  document.getElementById('login-form-cadastrar').style.display = tab === 'cadastrar' ? 'flex' : 'none';
-}
-
-function showLoginError(id, msg) {
-  const el = document.getElementById(id);
-  el.textContent = msg; el.classList.add('show');
-  setTimeout(() => el.classList.remove('show'), 4000);
-}
-
-function doLogin() {
-  const email = document.getElementById('login-email').value.trim();
-  const pw = document.getElementById('login-senha').value;
-  if (!email || !pw) { showLoginError('login-error-msg', 'Preencha todos os campos.'); return; }
-  const users = getUsers();
-  const user = users.find(u => u.email === email && u.pw === pw);
-  if (!user) { showLoginError('login-error-msg', 'Email ou senha incorretos.'); return; }
-  setData('current_user', user);
-  logActivity(user.email);
-  enterApp(user);
-}
-
-function doRegistrar() {
-  const nome = document.getElementById('reg-nome').value.trim();
-  const email = document.getElementById('reg-email').value.trim();
-  const pw = document.getElementById('reg-senha').value;
-  if (!nome || !email || !pw) { showLoginError('reg-error-msg', 'Preencha todos os campos.'); return; }
-  if (pw.length < 6) { showLoginError('reg-error-msg', 'Senha deve ter pelo menos 6 caracteres.'); return; }
-  const users = getUsers();
-  if (users.find(u => u.email === email)) { showLoginError('reg-error-msg', 'Email já cadastrado.'); return; }
-  const novo = { nome, email, pw, avatar: '🌸', criadoEm: new Date().toISOString(), metodo: 'email' };
-  users.push(novo); setUsers(users);
-  setData('current_user', novo);
-  logActivity(email);
-  enterApp(novo);
-}
-
-function doGoogleLogin() {
-  // Simulação de OAuth Google (frontend-only)
-  const googleUser = {
-    nome: 'Usuário Google',
-    email: 'usuario@gmail.com',
-    avatar: '🔵',
-    criadoEm: new Date().toISOString(),
-    metodo: 'google'
-  };
-  const users = getUsers();
-  if (!users.find(u => u.email === googleUser.email)) {
-    users.push(googleUser); setUsers(users);
-  }
-  setData('current_user', googleUser);
-  logActivity(googleUser.email);
-  showToast('✅ Login com Google realizado!');
-  enterApp(googleUser);
-}
-
-function logActivity(email) {
-  let log = getData('activity_log', []);
-  log.push({ email, ts: new Date().toISOString() });
-  if (log.length > 300) log = log.slice(-300);
-  setData('activity_log', log);
-}
-
-function enterApp(user) {
-  const ls = document.getElementById('login-screen');
-  ls.classList.add('hidden');
-  setTimeout(() => { ls.style.display = 'none'; }, 400);
-  updateProfileHeader(user);
-}
-
-function updateProfileHeader(user) {
-  const ai = document.getElementById('profile-avatar-icon');
-  const dn = document.getElementById('profile-display-name');
-  const de = document.getElementById('profile-display-email');
-  if (ai) ai.textContent = user.avatar || '🌸';
-  if (dn) dn.textContent = user.nome || 'Meu Espaço';
-  if (de) de.textContent = user.email || 'S.O.S Eficiência';
-}
-
-function doLogout() {
-  if (!confirm('Deseja sair da sua conta?')) return;
-  setData('current_user', null);
-  location.reload();
-}
-
-// ---------- NAVEGAÇÃO — ATUALIZADA PARA INCLUIR CONTACTS ----------
-const _origNavTo = navTo;
-navTo = function(page) {
-  _origNavTo(page);
-  if (page === 'contacts') renderContacts();
-  if (page === 'chat') initChat();
-};
-
-// Override setupScrollProgress para incluir contacts
-const _origSetupScroll = setupScrollProgress;
-setupScrollProgress = function() {
-  _origSetupScroll();
-  ['contacts','chat'].forEach(pid => {
-    const pg = document.getElementById('page-' + pid);
-    const br = document.getElementById('progress-' + pid);
-    if (!pg || !br) return;
-    pg.addEventListener('scroll', () => {
-      const pct = pg.scrollHeight - pg.clientHeight > 0
-        ? Math.min(100, (pg.scrollTop / (pg.scrollHeight - pg.clientHeight)) * 100) : 0;
-      br.style.width = pct + '%';
-      updateFabTopVisibility(pg.scrollTop);
-    });
-  });
-};
-
-// ---------- SOS MODAL — ATUALIZADO ----------
-const _origOpenSOS = openSOS;
-openSOS = function() {
-  // Popula contatos de confiança no modal SOS
-  const contacts = getData('contacts', []);
-  const el = document.getElementById('sos-trusted-contacts');
-  if (el) {
-    if (contacts.length > 0) {
-      el.innerHTML = '<p style="font-size:0.72rem;color:var(--text3);margin-bottom:8px;">Seus contatos de confiança:</p>' +
-        contacts.map(c => `<a href="tel:${c.fone}" style="text-decoration:none;display:block;margin-bottom:8px;">
-          <button class="call-btn" style="background:linear-gradient(135deg,var(--purple),var(--purple2));font-size:0.9rem;padding:13px;">
-            📞 ${c.nome} · ${c.rel}
-          </button></a>`).join('');
-    } else {
-      el.innerHTML = '<p style="font-size:0.73rem;color:var(--text3);text-align:center;padding:6px 0;">Adicione contatos na aba Contatos para vê-los aqui.</p>';
-    }
-  }
-  _origOpenSOS();
-};
-
-// ---------- RENDER CONTACTS PAGE ----------
-function renderContacts() {
-  renderContactsList();
-  renderPsychologists();
-}
-
-function renderContactsList() {
-  const contacts = getData('contacts', []);
-  const list = document.getElementById('contacts-list');
-  if (!list) return;
-  if (!contacts.length) {
-    list.innerHTML = '<div class="diary-empty" style="padding:14px 0;"><div class="diary-empty-icon" style="font-size:2.2rem;">👥</div><p>Nenhum contato cadastrado ainda.</p></div>';
-    return;
-  }
-  const avatares = ['👤','👩','👨','👴','👵','🧑','👧','👦'];
-  list.innerHTML = contacts.map((c, i) => `
-    <div class="contact-card">
-      <div class="contact-avatar">${c.avatar || avatares[i % avatares.length]}</div>
-      <div class="contact-info">
-        <div class="contact-name">${c.nome}</div>
-        <div class="contact-phone">📞 ${c.fone}</div>
-        <div class="contact-rel">${c.rel}</div>
-      </div>
-      <div class="contact-actions">
-        <a href="tel:${c.fone}" style="text-decoration:none;">
-          <button class="contact-act-btn">📞</button>
-        </a>
-        <button class="contact-act-btn del" onclick="deleteContact(${i})">🗑️</button>
-      </div>
-    </div>
-  `).join('');
-}
-
-function openAddContact() {
-  editingContactIdx = null;
-  document.getElementById('contact-modal-title').textContent = 'Adicionar Contato';
-  document.getElementById('contact-input-nome').value = '';
-  document.getElementById('contact-input-fone').value = '';
-  document.getElementById('contact-input-rel').value = '';
-  document.getElementById('contact-error-msg').classList.remove('show');
-  openModal('contact-modal');
-}
-
-function saveContact() {
-  const nome = document.getElementById('contact-input-nome').value.trim();
-  const fone = document.getElementById('contact-input-fone').value.trim();
-  const rel = document.getElementById('contact-input-rel').value.trim();
-  if (!nome || !fone) {
-    const e = document.getElementById('contact-error-msg');
-    e.textContent = 'Nome e telefone são obrigatórios.'; e.classList.add('show'); return;
-  }
-  const contacts = getData('contacts', []);
-  const avatares = ['👤','👩','👨','👴','👵','🧑','👧','👦'];
-  const entry = { nome, fone, rel: rel || 'Contato', avatar: avatares[contacts.length % avatares.length] };
-  if (editingContactIdx !== null) { contacts[editingContactIdx] = entry; }
-  else { contacts.push(entry); }
-  setData('contacts', contacts);
-  closeModal('contact-modal');
-  renderContactsList();
-  showToast('✅ Contato salvo!');
-}
-
-function deleteContact(idx) {
-  if (!confirm('Remover este contato?')) return;
-  const contacts = getData('contacts', []);
-  contacts.splice(idx, 1); setData('contacts', contacts);
-  renderContactsList();
-  showToast('🗑️ Contato removido');
-}
-
-// ---------- PSICÓLOGOS ----------
-function renderPsychologists() {
-  const psychs = getData('psychologists', DEFAULT_PSYCHOLOGISTS);
-  const list = document.getElementById('psychologists-list');
-  if (!list) return;
-  list.innerHTML = psychs.map((p, i) => `
-    <div class="psych-card">
-      <div class="psych-header">
-        <div class="psych-avatar">${p.avatar || '👩‍⚕️'}</div>
-        <div>
-          <div class="psych-name">${p.nome}</div>
-          <div class="psych-spec">${p.spec}</div>
-          <div class="psych-crp">${p.crp}</div>
-        </div>
-      </div>
-      <div class="psych-actions">
-        <a href="tel:${p.fone}" style="text-decoration:none;flex:1;">
-          <button class="psych-btn primary" style="width:100%;">📞 Ligar</button>
-        </a>
-        <a href="mailto:${p.email}" style="text-decoration:none;flex:1;">
-          <button class="psych-btn" style="width:100%;">✉️ E-mail</button>
-        </a>
-      </div>
-    </div>
-  `).join('');
-}
-
-// ---------- COLAR DE EMERGÊNCIA ----------
-function necklaceClick() {
-  necklaceClicks++;
-  for (let i = 0; i < 3; i++) {
-    const dot = document.getElementById('ndot' + i);
-    if (dot) dot.classList.toggle('active', i < necklaceClicks);
-  }
-  const status = document.getElementById('necklace-status');
-  clearTimeout(necklaceResetTimer);
-
-  if (necklaceClicks >= 3) {
-    necklaceClicks = 0;
-    for (let i = 0; i < 3; i++) {
-      const d = document.getElementById('ndot' + i); if (d) d.classList.remove('active');
-    }
-    if (status) { status.textContent = '🆘 Ativado! Enviando alerta...'; status.classList.add('triggered'); }
-    dispararSOS();
-    necklaceResetTimer = setTimeout(() => {
-      if (status) { status.textContent = 'Pressione 3 vezes seguidas para acionar'; status.classList.remove('triggered'); }
-    }, 5000);
-  } else {
-    const rest = 3 - necklaceClicks;
-    if (status) { status.textContent = `Mais ${rest} clique${rest > 1 ? 's' : ''} para acionar!`; status.classList.remove('triggered'); }
-    necklaceResetTimer = setTimeout(() => {
-      necklaceClicks = 0;
-      for (let i = 0; i < 3; i++) { const d = document.getElementById('ndot' + i); if (d) d.classList.remove('active'); }
-      if (status) { status.textContent = 'Pressione 3 vezes seguidas para acionar'; status.classList.remove('triggered'); }
-    }, 3000);
-  }
-}
-
-function dispararSOS() {
-  const contacts = getData('contacts', []);
-  let sos_log = getData('sos_log', []);
-  sos_log.push({ ts: new Date().toISOString(), contatos: contacts.map(c => c.nome) });
-  setData('sos_log', sos_log);
-
-  const msg = contacts.length > 0
-    ? `Alerta enviado para: ${contacts.map(c => c.nome).join(', ')}.`
-    : 'Adicione contatos de confiança para notificá-los automaticamente em emergências.';
-  const alertMsg = document.getElementById('sos-alert-msg');
-  if (alertMsg) alertMsg.textContent = msg;
-  document.getElementById('sos-alert-overlay').classList.add('open');
-}
-
-function fecharSosAlert() {
-  document.getElementById('sos-alert-overlay').classList.remove('open');
-}
-
-// ---------- ADMIN PANEL ----------
-function loginAdmin() {
-  const pw = document.getElementById('admin-pw-field').value;
-  const admins = getAdmins();
-  const ok = admins.some(a => a.pw === pw) || pw === DEFAULT_ADMIN_PW;
-  if (!ok) { showToast('❌ Senha de administrador incorreta'); return; }
-  isAdminLoggedIn = true;
-  document.getElementById('admin-login-area').style.display = 'none';
-  document.getElementById('admin-panel').style.display = 'block';
-  renderAdminPanel();
-  showToast('✅ Painel admin aberto!');
-}
-
-function logoutAdmin() {
-  isAdminLoggedIn = false;
-  document.getElementById('admin-panel').style.display = 'none';
-  document.getElementById('admin-login-area').style.display = 'block';
-  document.getElementById('admin-pw-field').value = '';
-}
-
-function renderAdminPanel() {
-  if (!isAdminLoggedIn) return;
-  const users = getUsers();
-  const admins = getAdmins();
-  const history = getData('emotion_history', []);
-  const diary = getData('diary', []);
-  const sos_log = getData('sos_log', []);
-  const contacts_all = getData('contacts', []);
-
-  // Usuários
-  const ul = document.getElementById('admin-users-list');
-  if (ul) {
-    if (!users.length) {
-      ul.innerHTML = '<p style="font-size:0.78rem;color:var(--text3);padding:8px 0;">Nenhum usuário cadastrado ainda.</p>';
-    } else {
-      ul.innerHTML = users.map(u => `
-        <div class="admin-user-row">
-          <div class="admin-row-flex">
-            <div>
-              <div class="admin-user-name">${u.avatar || '👤'} ${u.nome || '—'}</div>
-              <div class="admin-user-meta">📧 ${u.email} · ${u.metodo || 'email'} · ${new Date(u.criadoEm).toLocaleDateString('pt-BR')}</div>
-            </div>
-          </div>
-        </div>`).join('');
-    }
-  }
-
-  // Admins
-  const al = document.getElementById('admin-admins-list');
-  if (al) {
-    al.innerHTML = admins.map((a, i) => `
-      <div class="admin-user-row">
-        <div class="admin-row-flex">
-          <div>
-            <div class="admin-user-name">🔐 ${a.email}</div>
-            ${i === 0 ? '<div class="admin-user-meta">Administrador principal</div>' : ''}
-          </div>
-          ${i > 0 ? `<button class="contact-act-btn del" onclick="removerAdmin(${i})" style="font-size:0.72rem;">Remover</button>` : ''}
-        </div>
-      </div>`).join('');
-  }
-
-  // Estatísticas
-  const sl = document.getElementById('admin-stats-list');
-  if (sl) {
-    sl.innerHTML = `
-      <div class="admin-stat-row"><span class="admin-stat-label">👥 Usuários cadastrados</span><span class="admin-stat-value">${users.length}</span></div>
-      <div class="admin-stat-row"><span class="admin-stat-label">📊 Total de check-ins emocionais</span><span class="admin-stat-value">${history.length}</span></div>
-      <div class="admin-stat-row"><span class="admin-stat-label">📖 Entradas no diário</span><span class="admin-stat-value">${diary.length}</span></div>
-      <div class="admin-stat-row"><span class="admin-stat-label">🆘 Alertas SOS disparados</span><span class="admin-stat-value">${sos_log.length}</span></div>
-      <div class="admin-stat-row"><span class="admin-stat-label">👥 Contatos cadastrados</span><span class="admin-stat-value">${contacts_all.length}</span></div>
+  const container = document.getElementById('stars-container');
+  for (let i = 0; i < 80; i++) {
+    const star = document.createElement('div');
+    star.className = 'star';
+    star.style.cssText = `
+      left: ${Math.random() * 100}%;
+      top: ${Math.random() * 100}%;
+      animation-delay: ${Math.random() * 4}s;
+      animation-duration: ${2 + Math.random() * 3}s;
+      width: ${Math.random() > 0.8 ? 3 : 2}px;
+      height: ${Math.random() > 0.8 ? 3 : 2}px;
     `;
-  }
-}
-
-function openAddAdmin() {
-  document.getElementById('new-admin-email').value = '';
-  document.getElementById('new-admin-pw').value = '';
-  document.getElementById('add-admin-error-msg').classList.remove('show');
-  openModal('add-admin-modal');
-}
-
-function saveNewAdmin() {
-  const email = document.getElementById('new-admin-email').value.trim();
-  const pw = document.getElementById('new-admin-pw').value;
-  const errEl = document.getElementById('add-admin-error-msg');
-  if (!email || !pw) { errEl.textContent = 'Preencha todos os campos.'; errEl.classList.add('show'); return; }
-  if (pw.length < 6) { errEl.textContent = 'Senha deve ter pelo menos 6 caracteres.'; errEl.classList.add('show'); return; }
-  const admins = getAdmins();
-  if (admins.find(a => a.email === email)) { errEl.textContent = 'Email já é administrador.'; errEl.classList.add('show'); return; }
-  admins.push({ email, pw }); setAdmins(admins);
-  closeModal('add-admin-modal');
-  renderAdminPanel();
-  showToast('✅ Administrador adicionado!');
-}
-
-function removerAdmin(idx) {
-  if (!confirm('Remover este administrador?')) return;
-  const admins = getAdmins(); admins.splice(idx, 1); setAdmins(admins);
-  renderAdminPanel(); showToast('🗑️ Admin removido');
-}
-
-// ---------- AUTO-LOGIN ----------
-(function checkAutoLogin() {
-  const user = getData('current_user', null);
-  if (user && user.email) {
-    const ls = document.getElementById('login-screen');
-    if (ls) { ls.classList.add('hidden'); setTimeout(() => { ls.style.display = 'none'; }, 400); }
-    updateProfileHeader(user);
+    container.appendChild(star);
   }
 })();
 
-
-
-// ====================================================
-// CHAT AO VIVO — JAVASCRIPT
-// Usa localStorage compartilhado como "banco" de msgs
-// BroadcastChannel para comunicação entre abas/instâncias
-// ====================================================
-
-const CHAT_KEY = 'sos_chat_msgs';
-const CHAT_MAX = 200;             // máximo de mensagens guardadas
-let chatPollingInterval = null;
-let chatLastCount = 0;
-let chatTypingTimer = null;
-let chatInitialized = false;
-let broadcastCh = null;
-
-// Tenta usar BroadcastChannel para sync entre abas (mesmo dispositivo)
-try {
-  broadcastCh = new BroadcastChannel('sos_chat_channel');
-  broadcastCh.onmessage = () => { refreshChatMessages(false); };
-} catch(e) { broadcastCh = null; }
-
-function getChatMsgs() {
-  try { return JSON.parse(localStorage.getItem(CHAT_KEY)) || []; } catch { return []; }
-}
-
-function saveChatMsgs(msgs) {
-  if (msgs.length > CHAT_MAX) msgs = msgs.slice(-CHAT_MAX);
-  localStorage.setItem(CHAT_KEY, JSON.stringify(msgs));
-}
-
-function getCurrentUserName() {
-  const u = getData('current_user', null);
-  return u ? (u.nome || u.email || 'Anônimo') : 'Anônimo';
-}
-
-function getCurrentUserAvatar() {
-  const u = getData('current_user', null);
-  return u ? (u.avatar || '🌸') : '🌸';
-}
-
-function initChat() {
-  renderChatMessages(true);
-  chatInitialized = true;
-
-  // Polling a cada 2s para simular mensagens de outros usuários
-  clearInterval(chatPollingInterval);
-  chatPollingInterval = setInterval(() => refreshChatMessages(false), 2000);
-
-  // Auto-resize do textarea
-  const ta = document.getElementById('chat-input');
-  if (ta) {
-    ta.addEventListener('input', function() {
-      this.style.height = 'auto';
-      this.style.height = Math.min(this.scrollHeight, 100) + 'px';
-    });
-  }
-
-  // Foca input
-  setTimeout(() => { const t = document.getElementById('chat-input'); if (t) t.focus(); }, 300);
-
-  // Simula usuários online (número baseado no hash do horário + msgs)
-  updateOnlineCount();
-}
-
-function updateOnlineCount() {
-  const el = document.getElementById('chat-online-count');
-  if (!el) return;
-  const msgs = getChatMsgs();
-  // Simula: conta usuários únicos ativos na última hora
-  const oneHourAgo = Date.now() - 3600000;
-  const activeUsers = new Set(msgs.filter(m => m.ts > oneHourAgo && m.type !== 'system').map(m => m.user));
-  const me = getCurrentUserName();
-  activeUsers.add(me);
-  const n = Math.max(1, activeUsers.size);
-  el.textContent = n + (n === 1 ? ' online' : ' online');
-}
-
-function renderChatMessages(scrollToBottom) {
-  const container = document.getElementById('chat-messages');
-  if (!container) return;
-
-  const msgs = getChatMsgs();
-  chatLastCount = msgs.length;
-
-  if (!msgs.length) {
-    container.innerHTML = `<div class="chat-empty"><div class="chat-empty-icon">💬</div><p>Seja o primeiro a enviar uma mensagem!<br><span style="font-size:0.72rem;color:var(--text3)">Todas as mensagens são anônimas e respeitosas.</span></p></div>`;
-    return;
-  }
-
-  const me = getCurrentUserName();
-  let html = '';
-
-  msgs.forEach((msg, i) => {
-    if (msg.type === 'system') {
-      html += `<div class="chat-msg" style="align-self:center;max-width:90%;"><div class="chat-bubble system">${escHtml(msg.text)}</div></div>`;
-      return;
+// ---- Reveal on scroll ----
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      revealObserver.unobserve(entry.target);
     }
-    const isMine = msg.user === me;
-    const cls = isMine ? 'mine' : 'theirs';
-    const timeStr = formatChatTime(msg.ts);
-
-    // Agrupa mensagens do mesmo remetente consecutivas
-    const showName = !isMine && (i === 0 || msgs[i-1].user !== msg.user || msgs[i-1].type === 'system');
-
-    html += `<div class="chat-msg ${cls}">
-      ${showName ? `<div class="chat-sender-name">${escHtml(msg.avatar || '🌸')} ${escHtml(msg.user)}</div>` : ''}
-      <div class="chat-bubble">${escHtml(msg.text).replace(/\n/g, '<br>')}</div>
-      <div class="chat-meta">${timeStr}</div>
-    </div>`;
   });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
 
-  container.innerHTML = html;
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-  if (scrollToBottom) {
-    container.scrollTop = container.scrollHeight;
-  } else {
-    // Scroll só se já estava no fundo (tolerância 60px)
-    const nearBottom = container.scrollHeight - container.scrollTop - container.clientHeight < 60;
-    if (nearBottom) container.scrollTop = container.scrollHeight;
-  }
-
-  updateOnlineCount();
-}
-
-function refreshChatMessages(force) {
-  if (document.getElementById('page-chat')?.classList.contains('active') || force) {
-    const msgs = getChatMsgs();
-    if (msgs.length !== chatLastCount) {
-      renderChatMessages(false);
-    }
-  }
-}
-
-function sendChatMessage() {
-  const ta = document.getElementById('chat-input');
-  if (!ta) return;
-  const text = ta.value.trim();
-  if (!text) return;
-
-  const me = getCurrentUserName();
-  const avatar = getCurrentUserAvatar();
-
-  const msgs = getChatMsgs();
-  msgs.push({
-    id: Date.now() + '_' + Math.random().toString(36).slice(2,7),
-    user: me,
-    avatar: avatar,
-    text: text,
-    ts: Date.now(),
-    type: 'msg'
-  });
-  saveChatMsgs(msgs);
-
-  ta.value = '';
-  ta.style.height = 'auto';
-  renderChatMessages(true);
-
-  // Notifica outras abas/instâncias
-  if (broadcastCh) broadcastCh.postMessage({ type: 'new_msg' });
-
-  // Esconde indicador de digitação
-  const ti = document.getElementById('chat-typing');
-  if (ti) ti.classList.add('hidden');
-  clearTimeout(chatTypingTimer);
-}
-
-function chatKeyDown(e) {
-  // Enter sem Shift envia; Shift+Enter quebra linha
-  if (e.key === 'Enter' && !e.shiftKey) {
-    e.preventDefault();
-    sendChatMessage();
-  }
-}
-
-function chatTyping() {
-  // Mostra "digitando..." para o próprio usuário (cosmético)
-  clearTimeout(chatTypingTimer);
-  chatTypingTimer = setTimeout(() => {
-    const ti = document.getElementById('chat-typing');
-    if (ti) ti.classList.add('hidden');
-  }, 2000);
-}
-
-function formatChatTime(ts) {
-  const d = new Date(ts);
-  const now = new Date();
-  const isToday = d.toDateString() === now.toDateString();
-  const h = d.getHours().toString().padStart(2,'0');
-  const m = d.getMinutes().toString().padStart(2,'0');
-  if (isToday) return h + ':' + m;
-  return d.toLocaleDateString('pt-BR', { day:'2-digit', month:'2-digit' }) + ' ' + h + ':' + m;
-}
-
-function escHtml(str) {
-  if (!str) return '';
-  return String(str)
-    .replace(/&/g,'&amp;')
-    .replace(/</g,'&lt;')
-    .replace(/>/g,'&gt;')
-    .replace(/"/g,'&quot;');
-}
-
-// Mensagem de boas-vindas quando o app abre pela primeira vez
-(function insertWelcomeMsg() {
-  const msgs = getChatMsgs();
-  if (!msgs.length) {
-    msgs.push({
-      id: 'welcome_001',
-      type: 'system',
-      text: '💜 Bem-vindo ao Chat ao Vivo do S.O.S Eficiência! Este é um espaço de acolhimento e apoio mútuo.',
-      ts: Date.now() - 5000
-    });
-    saveChatMsgs(msgs);
-  }
-})();
-
-// Limpa polling quando a aba não está ativa
-document.addEventListener('visibilitychange', () => {
-  if (document.hidden) {
-    clearInterval(chatPollingInterval);
-  } else if (chatInitialized && document.getElementById('page-chat')?.classList.contains('active')) {
-    chatPollingInterval = setInterval(() => refreshChatMessages(false), 2000);
-  }
+// ---- Back to top ----
+const backTop = document.getElementById('back-top');
+window.addEventListener('scroll', () => {
+  backTop.classList.toggle('visible', window.scrollY > 500);
 });
 
+// ---- Nav links close on mobile ----
+document.querySelectorAll('.nav-links a').forEach(link => {
+  link.addEventListener('click', () => {
+    document.querySelector('.nav-links').classList.remove('open');
+  });
+});
 
+// ---- Smooth active nav highlight ----
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-links a');
+
+const navObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navLinks.forEach(a => a.style.color = '');
+      const active = document.querySelector(`.nav-links a[href="#${entry.target.id}"]`);
+      if (active) active.style.color = 'var(--dourado-claro)';
+    }
+  });
+}, { rootMargin: '-40% 0px -55% 0px' });
+
+sections.forEach(s => navObserver.observe(s));
+
+// ---- Counter animation ----
+function animateCounter(el, end, duration = 1600) {
+  let start = 0;
+  const step = (timestamp) => {
+    if (!start) start = timestamp;
+    const progress = Math.min((timestamp - start) / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    el.textContent = Math.floor(eased * end);
+    if (progress < 1) requestAnimationFrame(step);
+    else el.textContent = end;
+  };
+  requestAnimationFrame(step);
+}
+
+const counterObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const nums = entry.target.querySelectorAll('.stat-num');
+      nums.forEach(n => {
+        const raw = n.textContent.replace(/\D/g, '');
+        const suffix = n.textContent.replace(/[\d]/g, '');
+        if (raw) {
+          animateCounter({ textContent: '' }, parseInt(raw), 1800);
+          // Recreate properly
+          const val = parseInt(raw);
+          let frame = 0;
+          const total = 60;
+          const timer = setInterval(() => {
+            frame++;
+            const progress = frame / total;
+            const eased = 1 - Math.pow(1 - progress, 3);
+            n.textContent = Math.floor(eased * val) + (suffix.includes('+') ? '+' : '');
+            if (frame >= total) { clearInterval(timer); n.textContent = val + (suffix.includes('+') ? '+' : ''); }
+          }, 30);
+        }
+      });
+      counterObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.4 });
+
+const statsRow = document.querySelector('.stats-row');
+if (statsRow) counterObserver.observe(statsRow);
 </script>
 </body>
 </html>
